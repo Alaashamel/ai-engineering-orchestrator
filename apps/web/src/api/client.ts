@@ -36,6 +36,30 @@ export const api = {
       `/workflows/${projectId}/start`, { method: 'POST' }
     ),
 
+  approveWorkflow: (projectId: string, rollbackTo?: string) =>
+    request<{ status: string; state: Record<string, unknown> }>(
+      `/workflows/${projectId}/approve`, {
+        method: 'POST',
+        body: JSON.stringify({ rollback_to: rollbackTo }),
+      }
+    ),
+
+  rejectWorkflow: (projectId: string, reason?: string, rollbackTo?: string) =>
+    request<{ status: string; state: Record<string, unknown> }>(
+      `/workflows/${projectId}/reject`, {
+        method: 'POST',
+        body: JSON.stringify({ reason: reason || '', rollback_to: rollbackTo }),
+      }
+    ),
+
+  rollbackWorkflow: (projectId: string, rollbackTo: string) =>
+    request<{ status: string; phase: string; phase_history: unknown[] }>(
+      `/workflows/${projectId}/rollback`, {
+        method: 'POST',
+        body: JSON.stringify({ rollback_to: rollbackTo }),
+      }
+    ),
+
   getWorkflowStatus: (projectId: string) =>
     request<Record<string, unknown>>(`/workflows/${projectId}/status`),
 }
