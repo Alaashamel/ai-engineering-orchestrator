@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.models.database import get_db
 from src.models.project import Project
-from src.schemas.project import ProjectCreate, ProjectResponse, ProjectUpdate
+from src.schemas import ProjectCreate, ProjectResponse, ProjectUpdate
 
 router = APIRouter(prefix="/projects", tags=["projects"])
 
@@ -47,8 +47,6 @@ async def update_project(
         project.name = data.name
     if data.description is not None:
         project.description = data.description
-    if data.status is not None:
-        project.status = data.status
     await db.flush()
     await db.refresh(project)
     return project
