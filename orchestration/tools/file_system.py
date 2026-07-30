@@ -30,9 +30,10 @@ class FileSystemTool:
     def append_file(self, path: str, content: str) -> str:
         target = self._resolve(path)
         target.parent.mkdir(parents=True, exist_ok=True)
+        existed = target.exists()
         with open(target, "a", encoding="utf-8") as f:
             f.write(content)
-        return f"Appended: {path}"
+        return f"Appended: {path}" if existed else f"Created: {path}"
 
     def list_dir(self, path: str = ".") -> list[str]:
         target = self._resolve(path)
