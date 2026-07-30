@@ -21,7 +21,11 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Lint API
         run: cd apps/api && ruff check .
+        env:
+          PYTHONPATH: ${{ github.workspace }}
       - run: ruff check src/ tests/
+        env:
+          PYTHONPATH: ${{ github.workspace }}
       - name: Security scan
         run: pip install bandit && bandit -r apps/api/src/ -s B101
 
@@ -38,6 +42,8 @@ jobs:
           cache: "pip"
       - run: pip install -r requirements.txt
       - run: pyright src/ tests/
+        env:
+          PYTHONPATH: ${{ github.workspace }}
 
   api-tests:
     runs-on: ubuntu-latest
@@ -81,6 +87,7 @@ jobs:
         env:
           DATABASE_URL: postgresql+asyncpg://app:app_password@localhost:5432/ai_software_company
           REDIS_URL: redis://localhost:6379/0
+          PYTHONPATH: ${{ github.workspace }}
 
   web-lint:
     runs-on: ubuntu-latest
