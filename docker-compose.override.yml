@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  api:
+    volumes:
+      - ./apps/api:/app
+    command: uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
+
+  web:
+    volumes:
+      - ./apps/web:/app
+      - /app/node_modules
+    command: npm run dev -- --host 0.0.0.0
+    ports:
+      - "5173:5173"
+
+  postgres:
+    ports:
+      - "5432:5432"
