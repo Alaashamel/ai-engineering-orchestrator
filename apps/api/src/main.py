@@ -6,7 +6,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.config import settings
-from src.middleware import RequestIDMiddleware
+from src.middleware import RateLimitMiddleware, RequestIDMiddleware
 from src.models.database import engine
 from src.routers import audit as audit_router
 from src.routers import health, projects, workflows
@@ -51,6 +51,10 @@ else:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+
+if settings.environment == "production":
+    app.add_middleware(RateLimitMiddleware, max_requests=100, window_seconds=60)
 
 
 @app.exception_handler(HTTPException)
