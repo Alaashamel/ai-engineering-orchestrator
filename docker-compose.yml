@@ -14,6 +14,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - app-network
 
   redis:
     image: redis:7-alpine
@@ -21,9 +23,11 @@ services:
       - "6379:6379"
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    networks:
+      - app-network
 
   api:
     build:
@@ -45,6 +49,8 @@ services:
     volumes:
       - ./apps/api:/app
     command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - app-network
 
   web:
     build:
@@ -61,6 +67,11 @@ services:
       - ./apps/web:/app
       - /app/node_modules
     command: npm run dev -- --host 0.0.0.0
+    networks:
+      - app-network
 
 volumes:
   pgdata:
+
+networks:
+  app-network:
