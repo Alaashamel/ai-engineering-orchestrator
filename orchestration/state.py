@@ -49,6 +49,14 @@ class TaskItem(BaseModel):
     acceptance_criteria: list[str] = Field(default_factory=list)
 
 
+class GeneratedFileRecord(BaseModel):
+    path: str
+    agent: str
+    task_id: str
+    status: str = "pending"  # pending, written, skipped, error
+    content_preview: str = ""
+
+
 class ProjectState(BaseModel):
     project_id: UUID
     name: str
@@ -64,6 +72,9 @@ class ProjectState(BaseModel):
     errors: list[dict[str, Any]] = Field(default_factory=list)
     pending_approvals: list[ApprovalRequest] = Field(default_factory=list)
     agent_outputs: dict[str, Any] = Field(default_factory=dict)
+
+    generated_files: list[GeneratedFileRecord] = Field(default_factory=list)
+    implementation_log: list[dict[str, Any]] = Field(default_factory=list)
 
     created_at: str = ""
     updated_at: str = ""

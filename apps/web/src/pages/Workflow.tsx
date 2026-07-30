@@ -10,6 +10,8 @@ interface WorkflowState {
   errors: Array<{ phase: string; error: string }>
   human_approval_needed: boolean
   pending_approvals: Array<{ id: string; action: string; risk_level: string; status: string }>
+  generated_files: Array<{ path: string; agent: string; status: string; task_id: string }>
+  implementation_log: Array<{ phase: string; action: string; count?: number; timestamp: string }>
 }
 
 const phaseColors: Record<string, string> = {
@@ -115,6 +117,47 @@ export default function Workflow() {
                     <span className="text-xs px-1.5 py-0.5 rounded bg-gray-800 text-gray-400">
                       {t.priority}
                     </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {state.generated_files && state.generated_files.length > 0 && (
+            <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
+              <h2 className="text-sm font-medium text-gray-400 mb-3 uppercase tracking-wider">
+                Generated Files ({state.generated_files.length})
+              </h2>
+              <div className="space-y-1 max-h-48 overflow-y-auto">
+                {state.generated_files.map((f, i) => (
+                  <div key={i} className="flex items-center gap-2 text-xs">
+                    <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${
+                      f.status === 'written' ? 'bg-green-500' :
+                      f.status === 'error' ? 'bg-red-500' : 'bg-gray-500'
+                    }`} />
+                    <span className="text-gray-300 truncate font-mono">{f.path}</span>
+                    <span className="text-gray-600 ml-auto">{f.agent}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {state.implementation_log && state.implementation_log.length > 0 && (
+            <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
+              <h2 className="text-sm font-medium text-gray-400 mb-3 uppercase tracking-wider">
+                Implementation Log
+              </h2>
+              <div className="space-y-1">
+                {state.implementation_log.map((entry, i) => (
+                  <div key={i} className="flex items-center gap-2 text-xs">
+                    <span className="text-gray-500">
+                      {new Date(entry.timestamp).toLocaleTimeString()}
+                    </span>
+                    <span className="text-gray-300">{entry.action}</span>
+                    {entry.count !== undefined && (
+                      <span className="text-gray-600">({entry.count} files)</span>
+                    )}
                   </div>
                 ))}
               </div>
