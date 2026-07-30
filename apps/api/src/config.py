@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     llm_api_key: str = ""
     llm_model: str = "gpt-4o"
     webhook_url: str = ""
+    web_origin: str = "http://localhost:5173"
     otlp_endpoint: str = ""
 
 
