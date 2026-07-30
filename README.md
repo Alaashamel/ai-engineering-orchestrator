@@ -68,7 +68,7 @@ make dev-web         # http://localhost:5173
 ### Run Tests
 
 ```bash
-make test            # 13 tests — orchestration, agents, tools, health
+make test            # 46 tests — orchestration, agents, tools, API, security, tracing
 make lint            # Ruff + TypeScript type checking
 ```
 
@@ -129,10 +129,10 @@ make dev-web         # Full frontend experience
 | 1 | ✅ Done | Monorepo scaffold, FastAPI + React + Docker + CI |
 | 2 | ✅ Done | LangGraph orchestration engine, 4 planning agents, streaming |
 | 3 | ✅ Done | Engineering agents (Backend/Frontend/QA), file I/O tools |
-| 4 | 🔲 Planned | Human-in-the-loop approvals, observability (OpenTelemetry) |
-| 5 | 🔲 Planned | Real LLM integration, evaluation harness, regression tests |
-| 6 | 🔲 Planned | Security audit, vulnerability scanning, secret management |
-| 7 | 🔲 Planned | Production deployment, monitoring, auto-scaling |
+| 4 | ✅ Done | Human-in-the-loop approvals (WebSocket), OpenTelemetry tracing |
+| 5 | 🟡 Partial | LLM provider integration done; evaluation harness & regression suite not yet built |
+| 6 | 🟡 Partial | Webhook signature validation, CORS/rate-limiting, Bandit scanning in CI; broader secret management not yet implemented |
+| 7 | 🟡 Partial | Docker Compose prod config, backup/restore/migrate scripts; auto-scaling/IaC not yet implemented |
 
 ## Contributing
 
