@@ -26,6 +26,8 @@ class TestPlan(BaseModel):
 
 
 class TestingEngineerAgent(BaseAgent):
+    __test__ = False  # not a pytest test class — name just starts with "Test"
+
     @property
     def system_prompt(self) -> str:
         return (
