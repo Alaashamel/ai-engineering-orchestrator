@@ -5,6 +5,7 @@ import structlog
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
+from src.middleware import RequestIDMiddleware
 from src.models.database import engine
 from src.routers import audit as audit_router
 from src.routers import health, projects, workflows
@@ -32,6 +33,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+app.add_middleware(RequestIDMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
