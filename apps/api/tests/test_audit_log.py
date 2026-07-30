@@ -12,4 +12,4 @@ def test_audit_log_creation():
     )
     assert log.actor == "test"
     assert log.action == "test_action"
-    assert log.outcome == "success"
+    assert log.outcome is None  # DB default, not set at Python level
