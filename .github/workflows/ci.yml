@@ -19,6 +19,8 @@ jobs:
           python-version: "3.11"
           cache: "pip"
       - run: pip install -r requirements.txt
+      - name: Lint API
+        run: cd apps/api && ruff check .
       - run: ruff check src/ tests/
 
   api-typecheck:
