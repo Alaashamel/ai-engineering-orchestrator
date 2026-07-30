@@ -39,7 +39,7 @@ def project_state():
 
 @pytest.mark.asyncio
 async def test_backend_engineer_plan(project_state):
-    llm = LLMProvider()
+    llm = LLMProvider(api_key="")
     agent = BackendEngineerAgent(llm)
     plan = await agent.generate_backend(project_state, "Build CRUD API endpoints")
     assert len(plan.files_to_create) > 0
@@ -53,7 +53,7 @@ async def test_backend_engineer_plan(project_state):
 
 @pytest.mark.asyncio
 async def test_frontend_engineer_plan(project_state):
-    llm = LLMProvider()
+    llm = LLMProvider(api_key="")
     agent = FrontendEngineerAgent(llm)
     plan = await agent.generate_frontend(project_state, "Build React UI")
     assert len(plan.components) > 0
@@ -68,7 +68,7 @@ async def test_frontend_engineer_plan(project_state):
 
 @pytest.mark.asyncio
 async def test_testing_engineer_plan(project_state):
-    llm = LLMProvider()
+    llm = LLMProvider(api_key="")
     agent = TestingEngineerAgent(llm)
     plan = await agent.generate_tests(project_state, "Write tests", ["src/main.py"])
     assert len(plan.test_files) > 0
