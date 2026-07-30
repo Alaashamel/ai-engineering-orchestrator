@@ -29,4 +29,14 @@ class Settings(BaseSettings):
     otlp_endpoint: str = ""
 
 
+    def validate(self) -> list[str]:
+        warnings: list[str] = []
+        if self.environment == "production":
+            if self.jwt_secret == "dev-secret-change-in-production":
+                warnings.append("JWT_SECRET is still the default development value")
+            if not self.database_url or "localhost" in self.database_url:
+                warnings.append("DATABASE_URL points to localhost in production mode")
+        return warnings
+
+
 settings = Settings()
