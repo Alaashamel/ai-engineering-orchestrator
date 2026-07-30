@@ -440,6 +440,60 @@ class OrchestrationEngine:
             return "implementation"
         return "check_approvals"
 
+    def rollback_phase(self, state: GraphState, target_phase: str | None = None) -> GraphState:
+        history = list(state.get("phase_history", []))
+        if not history:
+            return state
+        if target_phase:
+            idx = next((i for i, h in enumerate(history) if h["phase"] == target_phase), -1)
+            if idx == -1:
+                return state
+            history = history[: idx + 1]
+            new_phase = target_phase
+        else:
+            history = history[:-1]
+            new_phase = history[-1]["phase"] if history else "discovery"
+        cleaned = dict(state)
+        cleaned["phase"] = new_phase
+        cleaned["phase_history"] = history
+        cleaned["errors"] = [e for e in cleaned.get("errors", [])
+                             if e.get("phase") != state.get("phase")]
+        cleaned["updated_at"] = datetime.now(timezone.utc).isoformat()
+        return cleaned
+
+    def approve_all(self, state: GraphState) -> GraphState:
+        approvals = list(state.get("pending_approvals", []))
+        for a in approvals:
+            a["status"] = "approved"
+            a["resolved_at"] = datetime.now(timezone.utc).isoformat()
+        state["pending_approvals"] = approvals
+        state["human_approval_needed"] = False
+        state["updated_at"] = datetime.now(timezone.utc).isoformat()
+        return state
+
+    def reject_all(self, state: GraphState, reason: str = "") -> GraphState:
+        approvals = list(state.get("pending_approvals", []))
+        for a in approvals:
+            a["status"] = "rejected"
+            a["reason"] = reason
+            a["resolved_at"] = datetime.now(timezone.utc).isoformat()
+        state["pending_approvals"] = approvals
+        state["human_approval_needed"] = False
+        state["updated_at"] = datetime.now(timezone.utc).isoformat()
+        return state
+
+    async def resume(
+        self, project_state: ProjectState, approved: bool = True, rollback_to: str | None = None
+    ) -> GraphState:
+        initial = _project_to_graph(project_state)
+        if rollback_to:
+            initial = self.rollback_phase(initial, rollback_to)
+        if approved:
+            initial = self.approve_all(initial)
+        else:
+            initial = self.reject_all(initial)
+        return await self.graph.ainvoke(initial)
+
     async def run(self, project_state: ProjectState) -> GraphState:
         initial = _project_to_graph(project_state)
         result = await self.graph.ainvoke(initial)
