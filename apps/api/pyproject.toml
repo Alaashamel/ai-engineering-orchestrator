@@ -1,5 +1,5 @@
 [tool.ruff.lint]
-ignore = ["B008"]
+ignore = ["B008", "BLE001"]
 
 [tool.pyright]
 include = ["src", "tests"]

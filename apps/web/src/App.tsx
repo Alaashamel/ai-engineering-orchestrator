@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import Dashboard from './pages/Dashboard'
 import Projects from './pages/Projects'
+import Workflow from './pages/Workflow'
 
 export default function App() {
   return (
@@ -9,6 +10,7 @@ export default function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
         <Route path="/projects" element={<Projects />} />
+        <Route path="/projects/:projectId/workflow" element={<Workflow />} />
       </Route>
     </Routes>
   )

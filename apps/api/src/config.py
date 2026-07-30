@@ -1,4 +1,11 @@
+import sys
+from pathlib import Path
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+_project_root = Path(__file__).resolve().parent.parent.parent.parent
+if str(_project_root) not in sys.path:
+    sys.path.insert(0, str(_project_root))
 
 
 class Settings(BaseSettings):
@@ -15,6 +22,8 @@ class Settings(BaseSettings):
     jwt_secret: str = "dev-secret-change-in-production"
     log_level: str = "DEBUG"
     environment: str = "development"
+    llm_api_key: str = ""
+    llm_model: str = "gpt-4o"
 
 
 settings = Settings()

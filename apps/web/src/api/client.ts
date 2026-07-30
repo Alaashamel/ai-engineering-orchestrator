@@ -30,4 +30,12 @@ export const api = {
 
   deleteProject: (id: string) =>
     request<void>(`/projects/${id}`, { method: 'DELETE' }),
+
+  startWorkflow: (projectId: string) =>
+    request<{ status: string; state: Record<string, unknown> }>(
+      `/workflows/${projectId}/start`, { method: 'POST' }
+    ),
+
+  getWorkflowStatus: (projectId: string) =>
+    request<Record<string, unknown>>(`/workflows/${projectId}/status`),
 }

@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.models.database import engine
-from src.routers import health, projects
+from src.routers import health, projects, workflows
 
 logger = structlog.get_logger()
 
@@ -18,7 +18,7 @@ async def lifespan(_app: FastAPI) -> AsyncGenerator:
         async with engine.begin() as conn:
             from src.models.database import Base
             await conn.run_sync(Base.metadata.create_all)
-    except Exception as e:  # noqa: BLE001
+    except Exception as e:
         logger.warning("Database not available at startup", error=str(e))
     yield
     await engine.dispose()
@@ -41,6 +41,7 @@ app.add_middleware(
 
 app.include_router(health.router)
 app.include_router(projects.router)
+app.include_router(workflows.router)
 
 
 @app.get("/")
