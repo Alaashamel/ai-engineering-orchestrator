@@ -6,6 +6,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.models.database import engine
+from src.routers import audit as audit_router
 from src.routers import health, projects, workflows
 
 logger = structlog.get_logger()
@@ -59,6 +60,7 @@ async def general_exception_handler(request, exc):
 app.include_router(health.router)
 app.include_router(projects.router)
 app.include_router(workflows.router)
+app.include_router(audit_router.router)
 
 
 @app.get("/")
