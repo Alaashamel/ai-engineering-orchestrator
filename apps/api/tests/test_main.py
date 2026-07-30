@@ -1,5 +1,6 @@
 from src.main import app
 
+
 def test_app_title():
     assert app.title == "AI Software Engineering Company"
 
@@ -15,7 +16,7 @@ def test_routes_exist():
     assert "/" in schema["paths"]
 
 def test_cors_middleware_loaded():
-    middlewares = [m.cls.__name__ for m in app.user_middleware]
+    middlewares = [getattr(m.cls, "__name__", str(m.cls)) for m in app.user_middleware]
     assert "CORSMiddleware" in middlewares
 
 def test_health_route_returns_json():

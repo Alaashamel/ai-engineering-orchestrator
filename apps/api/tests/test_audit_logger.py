@@ -1,5 +1,7 @@
 from uuid import uuid4
+
 from orchestration.audit import AuditLogger
+
 
 def test_audit_logger_buffers_entries():
     logger = AuditLogger()
@@ -14,7 +16,6 @@ def test_audit_logger_stores_details():
     assert logger.entries[0]["details"]["key"] == "val"
 
 def test_audit_logger_flush_without_session():
-    import pytest
     logger = AuditLogger()
     logger.log(uuid4(), "test", "action", "resource")
     import asyncio

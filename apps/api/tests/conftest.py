@@ -1,7 +1,9 @@
-import pytest
 from datetime import datetime, timezone
 from uuid import uuid4
-from orchestration.state import ProjectState, Phase
+
+import pytest
+from orchestration.state import Phase, ProjectState
+
 
 @pytest.fixture
 def sample_project_state():
