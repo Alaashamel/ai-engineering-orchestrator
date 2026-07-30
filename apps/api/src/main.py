@@ -6,6 +6,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.config import settings
+from src.logger import setup_logging
 from src.middleware import RateLimitMiddleware, RequestIDMiddleware
 from src.models.database import engine
 from src.routers import audit as audit_router
@@ -16,6 +17,7 @@ logger = structlog.get_logger()
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI) -> AsyncGenerator:
+    setup_logging(settings.log_level)
     logger.info("Starting AI Software Engineering API")
     try:
         async with engine.begin() as conn:
