@@ -15,10 +15,12 @@ from fastapi import (
 from orchestration.audit import get_audit_logger
 from orchestration.graph import OrchestrationEngine
 from orchestration.state import Phase, ProjectState
+from orchestration.webhooks import WebhookNotifier
 from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.config import settings
 from src.models.database import get_db
 from src.models.project import Project
 from src.websocket_manager import manager
@@ -30,6 +32,10 @@ _state_store: dict[str, ProjectState] = {}
 
 def _get_engine() -> OrchestrationEngine:
     return OrchestrationEngine()
+
+
+def _get_webhook() -> WebhookNotifier:
+    return WebhookNotifier(webhook_url=settings.webhook_url or None)
 
 
 def _build_project_state(project: Project) -> ProjectState:
@@ -70,6 +76,13 @@ async def start_workflow(project_id: UUID, db: AsyncSession = Depends(get_db)):
             str(project_id),
             {"type": "workflow_complete", "state": result_state},
         )
+        webhook = _get_webhook()
+        await webhook.notify("workflow.completed", str(project_id), {
+            "name": project.name,
+            "phase": result_state.get("phase"),
+            "tasks_count": len(result_state.get("tasks", [])),
+            "has_approvals": result_state.get("human_approval_needed", False),
+        })
         return {"status": "completed", "state": result_state}
     except Exception as e:
         await manager.broadcast(

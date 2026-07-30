@@ -24,6 +24,8 @@ class Settings(BaseSettings):
     environment: str = "development"
     llm_api_key: str = ""
     llm_model: str = "gpt-4o"
+    webhook_url: str = ""
+    otlp_endpoint: str = ""
 
 
 settings = Settings()
