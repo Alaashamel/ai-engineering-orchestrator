@@ -33,6 +33,9 @@ export default function Workflow() {
   const [state, setState] = useState<WorkflowState | null>(null)
   const [running, setRunning] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [rejectReason, setRejectReason] = useState('')
+  const [approving, setApproving] = useState(false)
+  const [rejecting, setRejecting] = useState(false)
 
   async function startWorkflow() {
     if (!projectId) return
@@ -45,6 +48,45 @@ export default function Workflow() {
       setError(e instanceof Error ? e.message : 'Workflow failed')
     } finally {
       setRunning(false)
+    }
+  }
+
+  async function handleApprove() {
+    if (!projectId) return
+    setApproving(true)
+    setError(null)
+    try {
+      const result = await api.approveWorkflow(projectId)
+      setState(result.state as unknown as WorkflowState)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Approval failed')
+    } finally {
+      setApproving(false)
+    }
+  }
+
+  async function handleReject() {
+    if (!projectId) return
+    setRejecting(true)
+    setError(null)
+    try {
+      const result = await api.rejectWorkflow(projectId, rejectReason)
+      setState(result.state as unknown as WorkflowState)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Rejection failed')
+    } finally {
+      setRejecting(false)
+    }
+  }
+
+  async function handleRollback(phase: string) {
+    if (!projectId) return
+    setError(null)
+    try {
+      const result = await api.rollbackWorkflow(projectId, phase)
+      setState(prev => prev ? { ...prev, phase: result.phase, phase_history: result.phase_history as WorkflowState['phase_history'] } : null)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Rollback failed')
     }
   }
 
@@ -88,6 +130,15 @@ export default function Workflow() {
                   <span className="text-xs text-gray-600 ml-auto">
                     {new Date(p.timestamp).toLocaleTimeString()}
                   </span>
+                  {i < state.phase_history.length - 1 && (
+                    <button
+                      onClick={() => handleRollback(p.phase)}
+                      className="text-xs text-yellow-500 hover:text-yellow-400 ml-2"
+                      title={`Rollback to ${p.phase}`}
+                    >
+                      rollback
+                    </button>
+                  )}
                 </div>
               ))}
               <div className="flex items-center gap-3 pt-2 border-t border-gray-800">
@@ -98,6 +149,51 @@ export default function Workflow() {
               </div>
             </div>
           </div>
+
+          {state.human_approval_needed && state.pending_approvals.length > 0 && (
+            <div className="bg-yellow-900/30 border border-yellow-800 rounded-xl p-4">
+              <h2 className="text-sm font-medium text-yellow-400 mb-3 uppercase tracking-wider">
+                Approvals Required
+              </h2>
+              <div className="space-y-3 mb-4">
+                {state.pending_approvals.map((a) => (
+                  <div key={a.id} className="flex items-center justify-between text-sm">
+                    <span>{a.action}</span>
+                    <span className={`px-2 py-0.5 rounded text-xs ${
+                      a.risk_level === 'high' ? 'bg-red-900 text-red-300' :
+                      a.risk_level === 'medium' ? 'bg-yellow-900 text-yellow-300' :
+                      'bg-green-900 text-green-300'
+                    }`}>
+                      {a.risk_level} risk
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handleApprove}
+                  disabled={approving}
+                  className="px-4 py-2 bg-green-700 hover:bg-green-600 disabled:opacity-40 rounded-lg text-sm font-medium transition-colors"
+                >
+                  {approving ? 'Approving...' : 'Approve All'}
+                </button>
+                <input
+                  type="text"
+                  value={rejectReason}
+                  onChange={(e) => setRejectReason(e.target.value)}
+                  placeholder="Reason for rejection (optional)"
+                  className="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-red-500"
+                />
+                <button
+                  onClick={handleReject}
+                  disabled={rejecting}
+                  className="px-4 py-2 bg-red-700 hover:bg-red-600 disabled:opacity-40 rounded-lg text-sm font-medium transition-colors"
+                >
+                  {rejecting ? 'Rejecting...' : 'Reject'}
+                </button>
+              </div>
+            </div>
+          )}
 
           {state.tasks.length > 0 && (
             <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
@@ -114,6 +210,13 @@ export default function Workflow() {
                     }`} />
                     <span className="flex-1">{t.title}</span>
                     <span className="text-xs text-gray-500">{t.agent}</span>
+                    <span className={`text-xs px-1.5 py-0.5 rounded ${
+                      t.status === 'completed' ? 'bg-green-900 text-green-300' :
+                      t.status === 'pending' ? 'bg-gray-800 text-gray-400' :
+                      'bg-gray-800 text-gray-400'
+                    }`}>
+                      {t.status}
+                    </span>
                     <span className="text-xs px-1.5 py-0.5 rounded bg-gray-800 text-gray-400">
                       {t.priority}
                     </span>
@@ -178,26 +281,6 @@ export default function Workflow() {
                   </div>
                 ))}
               </div>
-            </div>
-          )}
-
-          {state.human_approval_needed && state.pending_approvals.length > 0 && (
-            <div className="bg-yellow-900/30 border border-yellow-800 rounded-xl p-4">
-              <h2 className="text-sm font-medium text-yellow-400 mb-3 uppercase tracking-wider">
-                Approvals Required
-              </h2>
-              {state.pending_approvals.map((a) => (
-                <div key={a.id} className="flex items-center justify-between text-sm">
-                  <span>{a.action}</span>
-                  <span className={`px-2 py-0.5 rounded text-xs ${
-                    a.risk_level === 'high' ? 'bg-red-900 text-red-300' :
-                    a.risk_level === 'medium' ? 'bg-yellow-900 text-yellow-300' :
-                    'bg-green-900 text-green-300'
-                  }`}>
-                    {a.risk_level} risk
-                  </span>
-                </div>
-              ))}
             </div>
           )}
 

@@ -30,3 +30,17 @@ Thumbs.db
 
 # Logs
 *.log
+
+# OS
+Thumbs.db
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env.local
+.env.production
