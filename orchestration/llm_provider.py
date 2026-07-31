@@ -1,8 +1,15 @@
 from __future__ import annotations
 
+import logging
 from typing import Any
 
 from pydantic import BaseModel
+
+logger = logging.getLogger(__name__)
+
+
+class LLMQuotaError(Exception):
+    """Raised when the API key has insufficient quota."""
 
 
 class LLMProvider:
@@ -15,6 +22,7 @@ class LLMProvider:
         max_retries: int = 3,
         temperature: float = 0.7,
         max_tokens: int = 4096,
+        auto_fallback: bool = True,
     ) -> None:
         self.api_key = api_key
         self.model = model
@@ -23,11 +31,17 @@ class LLMProvider:
         self.max_retries = max_retries
         self.temperature = temperature
         self.max_tokens = max_tokens
+        self.auto_fallback = auto_fallback
         self._mock_mode = api_key is None
+        self._quota_exhausted = False
 
     @property
     def mock_mode(self) -> bool:
-        return self._mock_mode
+        return self._mock_mode or self._quota_exhausted
+
+    @property
+    def quota_exhausted(self) -> bool:
+        return self._quota_exhausted
 
     async def generate_structured(
         self,
@@ -37,9 +51,19 @@ class LLMProvider:
     ) -> BaseModel:
         if self.mock_mode:
             return self._mock_response(response_model)
-        return await self._real_call(
-            system_prompt, user_prompt, response_model
-        )
+        try:
+            return await self._real_call(
+                system_prompt, user_prompt, response_model
+            )
+        except LLMQuotaError:
+            if self.auto_fallback:
+                logger.warning(
+                    "LLM quota exhausted — falling back to mock. "
+                    "Add billing to your API key for real responses."
+                )
+                self._quota_exhausted = True
+                return self._mock_response(response_model)
+            raise
 
     async def _real_call(
         self,
@@ -50,17 +74,23 @@ class LLMProvider:
         from openai import AsyncOpenAI
 
         client = AsyncOpenAI(api_key=self.api_key, base_url=self.base_url)
-        completion = await client.beta.chat.completions.parse(
-            model=self.model,
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt},
-            ],
-            response_format=response_model,
-            temperature=self.temperature,
-            max_tokens=self.max_tokens,
-            timeout=self.timeout,
-        )
+        try:
+            completion = await client.beta.chat.completions.parse(
+                model=self.model,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+                response_format=response_model,
+                temperature=self.temperature,
+                max_tokens=self.max_tokens,
+                timeout=self.timeout,
+            )
+        except Exception as exc:
+            error_msg = str(exc)
+            if "insufficient_quota" in error_msg or "quota" in error_msg.lower():
+                raise LLMQuotaError(error_msg) from exc
+            raise
         raw = completion.choices[0].message.content
         if not raw:
             raise ValueError("Empty LLM response")

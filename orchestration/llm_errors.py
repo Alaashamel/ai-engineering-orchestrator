@@ -27,6 +27,17 @@ class LLMTimeoutError(LLMError):
         self.timeout = timeout
 
 
+class LLMQuotaError(LLMError):
+    def __init__(
+        self, model: str = "unknown", details: str = ""
+    ) -> None:
+        super().__init__(
+            message=f"Insufficient API quota for model {model}: {details}",
+            model=model,
+        )
+        self.details = details
+
+
 class LLMRateLimitError(LLMError):
     def __init__(
         self, model: str = "unknown", retry_after: int = 60
