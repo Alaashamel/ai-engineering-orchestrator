@@ -20,7 +20,7 @@ jobs:
           cache: "pip"
       - run: pip install -r requirements.txt
       - name: Lint API
-        run: cd apps/api && ruff check .
+        run: ruff check .
         env:
           PYTHONPATH: ${{ github.workspace }}
       - run: ruff check src/ tests/
