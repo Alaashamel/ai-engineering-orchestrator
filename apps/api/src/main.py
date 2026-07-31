@@ -13,12 +13,12 @@ from src.routers import audit as audit_router
 from src.routers import eval as eval_router
 from src.routers import health, projects, workflows
 
+setup_logging(settings.log_level)
 logger = structlog.get_logger()
 
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI) -> AsyncGenerator:
-    setup_logging(settings.log_level)
     logger.info("Starting AI Software Engineering API")
     try:
         async with engine.begin() as conn:
