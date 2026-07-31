@@ -1,15 +1,17 @@
 # Security Policy
 
-## Reporting a Vulnerability
-
-Report vulnerabilities by opening an issue or emailing the maintainers.
-
 ## Supported Versions
 
 | Version | Supported |
 |---------|-----------|
 | 0.1.x   | Yes       |
 | < 0.1   | No        |
+
+## Reporting a Vulnerability
+
+We take the security of AI Engineering Orchestrator seriously. If you believe you've found a security vulnerability, please report it to us by opening a private issue or contacting the maintainers directly.
+
+**Please do not report security vulnerabilities through public GitHub issues.**
 
 ## Security Practices
 

@@ -1,0 +1,11 @@
+Migrations
+==========
+
+Generate new migration:
+    alembic revision --autogenerate -m "description"
+
+Apply migrations:
+    alembic upgrade head
+
+Rollback:
+    alembic downgrade -1
