@@ -32,6 +32,9 @@ export default function Layout() {
       <main className="flex-1 overflow-auto">
         <Outlet />
       </main>
+      <footer className="border-t border-gray-800 p-4 text-center text-xs text-gray-600">
+        v0.1.0 &middot; AI Software Engineering Co.
+      </footer>
     </div>
   )
 }

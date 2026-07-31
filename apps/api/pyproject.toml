@@ -1,5 +1,12 @@
 [tool.ruff.lint]
-ignore = ["B008"]
+ignore = ["B008", "BLE001"]
 
 [tool.pyright]
 include = ["src", "tests"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = [
+    "integration: marks tests that require external services (PostgreSQL)",
+]
