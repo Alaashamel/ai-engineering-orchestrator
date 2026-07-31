@@ -29,7 +29,10 @@ class Settings(BaseSettings):
     otlp_endpoint: str = ""
 
 
-    def validate(self) -> list[str]:
+    def production_warnings(self) -> list[str]:
+        """Returns human-readable warnings about settings that look unsafe
+        for a production environment. Named to avoid colliding with
+        pydantic's own BaseModel.validate classmethod."""
         warnings: list[str] = []
         if self.environment == "production":
             if self.jwt_secret == "dev-secret-change-in-production":

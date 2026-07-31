@@ -1,11 +1,18 @@
 import asyncio
 from logging.config import fileConfig
 
-from alembic import context
 from sqlalchemy.ext.asyncio import create_async_engine
 
+from alembic import context
+
+# These imports are used only for their side effect of registering each
+# model's table on Base.metadata, which alembic autogenerate relies on
+# below via target_metadata. Ruff sees them as "unused" by name, so they
+# need noqa — removing them silently makes autogenerate blind to that
+# table's schema.
+from src.models.audit_log import AuditLog  # noqa: F401
 from src.models.database import Base
-from src.models.project import Project
+from src.models.project import Project  # noqa: F401
 
 config = context.config
 if config.config_file_name is not None:

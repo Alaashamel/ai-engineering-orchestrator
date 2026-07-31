@@ -19,6 +19,8 @@ logger = structlog.get_logger()
 async def lifespan(_app: FastAPI) -> AsyncGenerator:
     setup_logging(settings.log_level)
     logger.info("Starting AI Software Engineering API")
+    for warning in settings.production_warnings():
+        logger.warning("Insecure production setting detected", detail=warning)
     try:
         async with engine.begin() as conn:
             from src.models.database import Base

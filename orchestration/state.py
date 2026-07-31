@@ -60,7 +60,7 @@ class GeneratedFileRecord(BaseModel):
 class ProjectState(BaseModel):
     project_id: UUID
     name: str
-    description: str
+    description: str = ""
     phase: Phase = Phase.DISCOVERY
     phase_history: list[dict[str, Any]] = Field(default_factory=list)
 

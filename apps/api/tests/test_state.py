@@ -1,6 +1,14 @@
 from uuid import uuid4
-from datetime import datetime, timezone
-from orchestration.state import Phase, ProjectState, TaskItem, Decision, ApprovalRequest, GeneratedFileRecord
+
+from orchestration.state import (
+    ApprovalRequest,
+    Decision,
+    GeneratedFileRecord,
+    Phase,
+    ProjectState,
+    TaskItem,
+)
+
 
 def test_phase_enum_values():
     assert Phase.DISCOVERY.value == "discovery"

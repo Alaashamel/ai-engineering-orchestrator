@@ -440,7 +440,7 @@ class OrchestrationEngine:
             return "implementation"
         return "check_approvals"
 
-    def rollback_phase(self, state: GraphState, target_phase: str | None = None) -> GraphState:
+    def rollback_phase(self, state: dict[str, Any], target_phase: str | None = None) -> dict[str, Any]:
         history = list(state.get("phase_history", []))
         if not history:
             return state
@@ -461,7 +461,7 @@ class OrchestrationEngine:
         cleaned["updated_at"] = datetime.now(timezone.utc).isoformat()
         return cleaned
 
-    def approve_all(self, state: GraphState) -> GraphState:
+    def approve_all(self, state: dict[str, Any]) -> dict[str, Any]:
         approvals = list(state.get("pending_approvals", []))
         for a in approvals:
             a["status"] = "approved"
@@ -471,7 +471,7 @@ class OrchestrationEngine:
         state["updated_at"] = datetime.now(timezone.utc).isoformat()
         return state
 
-    def reject_all(self, state: GraphState, reason: str = "") -> GraphState:
+    def reject_all(self, state: dict[str, Any], reason: str = "") -> dict[str, Any]:
         approvals = list(state.get("pending_approvals", []))
         for a in approvals:
             a["status"] = "rejected"
