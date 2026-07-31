@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-import json
 from pathlib import Path
-from typing import Any, Optional
 
 
 class LLMSecretManager:
@@ -21,7 +19,7 @@ class LLMSecretManager:
             f.write(value)
         secret_file.chmod(0o600)
 
-    def get_secret(self, key: str) -> Optional[str]:
+    def get_secret(self, key: str) -> str | None:
         secret_file = self.secrets_dir / f"{key}.secret"
         if not secret_file.exists():
             return None

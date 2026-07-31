@@ -1,10 +1,12 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+import logging
+from dataclasses import dataclass
 from datetime import datetime, timezone
-from typing import Optional
 
 from orchestration.llm_config import LLMCostConfig
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -54,23 +56,23 @@ class LLMCostTracker:
         return record
 
     def _log_cost(self, record: LLMCostRecord) -> None:
-        from orchestration.audit import AuditLogger
-        logger = AuditLogger.get_instance()
         logger.info(
             "llm_cost_recorded",
-            model=record.model,
-            tokens=record.usage.total_tokens,
-            cost=record.cost,
-            total_cost=self.total_cost,
+            extra={
+                "model": record.model,
+                "tokens": record.usage.total_tokens,
+                "cost": record.cost,
+                "total_cost": self.total_cost,
+            },
         )
 
     def _alert_threshold_reached(self) -> None:
-        from orchestration.audit import AuditLogger
-        logger = AuditLogger.get_instance()
         logger.warning(
             "llm_cost_threshold_reached",
-            total_cost=self.total_cost,
-            threshold=self.config.alert_threshold,
+            extra={
+                "total_cost": self.total_cost,
+                "threshold": self.config.alert_threshold,
+            },
         )
 
     def get_summary(self) -> dict[str, object]:

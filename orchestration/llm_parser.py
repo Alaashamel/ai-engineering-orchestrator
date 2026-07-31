@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 import re
-from typing import Any, Optional
 
 from pydantic import BaseModel
 
@@ -40,7 +39,7 @@ class LLMOutputParser:
     @staticmethod
     def validate_response(
         text: str, response_model: type[BaseModel]
-    ) -> tuple[bool, Optional[str]]:
+    ) -> tuple[bool, str | None]:
         try:
             LLMOutputParser.parse_to_model(text, response_model)
             return True, None

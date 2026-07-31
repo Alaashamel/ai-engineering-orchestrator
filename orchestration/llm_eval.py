@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass, field
-from typing import Any, Optional
+from typing import Any
 
 from pydantic import BaseModel
 
@@ -15,7 +14,7 @@ class EvalResult:
     actual: Any
     score: float
     latency_ms: float
-    error: Optional[str] = None
+    error: str | None = None
 
 
 @dataclass
@@ -23,7 +22,7 @@ class EvalSuiteConfig:
     name: str
     test_cases: list[dict[str, Any]] = field(default_factory=list)
     baseline_model: str = "gpt-4o"
-    comparison_model: Optional[str] = None
+    comparison_model: str | None = None
     tolerance: float = 0.95
     output_dir: str = "eval_results"
 

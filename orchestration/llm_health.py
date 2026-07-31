@@ -2,12 +2,11 @@ from __future__ import annotations
 
 from typing import Any
 
-from pydantic import BaseModel
-
 
 class LLMIntegrationHealthCheck:
     def __init__(self) -> None:
         self._checks: dict[str, Any] = {}
+        self._results: dict[str, Any] = {}
 
     def register_check(
         self, name: str, check_fn: Any
@@ -38,16 +37,21 @@ class LLMIntegrationHealthCheck:
                     "status": "unhealthy",
                     "error": str(exc),
                 }
+        self._results = results
         return results
 
     def get_status(self) -> str:
+        if not self._results:
+            return "unknown"
         return "healthy" if all(
             v.get("status") == "healthy"
-            for v in self._checks.values()
+            for v in self._results.values()
         ) else "degraded"
 
     def is_healthy(self) -> bool:
+        if not self._results:
+            return len(self._checks) > 0
         return all(
             v.get("status") == "healthy"
-            for v in self._checks.values()
+            for v in self._results.values()
         )

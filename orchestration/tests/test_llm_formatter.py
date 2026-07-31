@@ -1,4 +1,3 @@
-import pytest
 from orchestration.llm_formatter import (
     LLMIntegrationFormatter,
     LLMIntegrationFormatterManager,

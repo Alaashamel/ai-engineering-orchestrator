@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from typing import Any, Optional
+from typing import Any
 
 
 class LLMProviderFactory:
     @staticmethod
     def create_openai_provider(
-        api_key: Optional[str] = None,
+        api_key: str | None = None,
         model: str = "gpt-4o",
         **kwargs: Any,
     ) -> Any:
@@ -32,7 +32,7 @@ class LLMProviderFactory:
     @staticmethod
     def create_provider(
         provider_name: str,
-        api_key: Optional[str] = None,
+        api_key: str | None = None,
         model: str = "gpt-4o",
         **kwargs: Any,
     ) -> Any:

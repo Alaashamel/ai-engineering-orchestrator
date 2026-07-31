@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Callable
+from typing import Any
 
 from pydantic import BaseModel
 
@@ -104,7 +104,7 @@ class LLMProvider:
         response_model: type[BaseModel],
     ) -> Any:
         if self.mock_mode:
-            result = await self._mock_response(response_model)
+            result = self._mock_response(response_model)
             yield result.model_dump_json()
             return
         yield await self.generate_structured(

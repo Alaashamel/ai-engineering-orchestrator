@@ -1,11 +1,10 @@
-import pytest
 from orchestration.llm_config_manager import LLMIntegrationConfig
 
 
 class TestLLMIntegrationConfig:
     def test_default_config(self, tmp_path):
         config = LLMIntegrationConfig(
-            config_dir=str(tmp_path / "llm_config.json"
+            config_path=str(tmp_path / "llm_config.json")
         )
         assert config.get("provider") == "openai"
         assert config.get("model") == "gpt-4o"
@@ -13,7 +12,7 @@ class TestLLMIntegrationConfig:
 
     def test_set_and_get(self, tmp_path):
         config = LLMIntegrationConfig(
-            config_dir=str(tmp_path / "llm_config.json"
+            config_path=str(tmp_path / "llm_config.json")
         )
         config.set("temperature", 0.5)
         assert config.get("temperature") == 0.5
@@ -29,7 +28,7 @@ class TestLLMIntegrationConfig:
 
     def test_reset_to_defaults(self, tmp_path):
         config = LLMIntegrationConfig(
-            config_dir=str(tmp_path / "llm_config.json"
+            config_path=str(tmp_path / "llm_config.json")
         )
         config.set("temperature", 0.9)
         config.reset_to_defaults()

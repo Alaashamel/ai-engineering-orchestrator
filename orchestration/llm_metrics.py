@@ -1,10 +1,7 @@
 from __future__ import annotations
 
-import asyncio
 import time
-from typing import Any, Optional
-
-from pydantic import BaseModel
+from typing import Any
 
 
 class LLMMetricsCollector:
@@ -18,7 +15,7 @@ class LLMMetricsCollector:
         latency_ms: float,
         tokens_used: int,
         success: bool,
-        error: Optional[str] = None,
+        error: str | None = None,
     ) -> None:
         entry: dict[str, Any] = {
             "model": model,

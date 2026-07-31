@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Optional
-
-from pydantic import BaseModel
+from typing import Any
 
 
 class LLMProviderRegistry:
@@ -17,7 +15,7 @@ class LLMProviderRegistry:
         if name in self._providers:
             del self._providers[name]
 
-    def get_provider(self, name: Optional[str] = None) -> Any:
+    def get_provider(self, name: str | None = None) -> Any:
         provider_name = name or self._default_provider
         if provider_name not in self._providers:
             raise KeyError(

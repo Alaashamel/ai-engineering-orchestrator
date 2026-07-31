@@ -1,15 +1,14 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from typing import Optional
+from dataclasses import dataclass
 
 
 @dataclass
 class LLMProviderConfig:
     provider: str = "openai"
     model: str = "gpt-4o"
-    api_key: Optional[str] = None
-    base_url: Optional[str] = None
+    api_key: str | None = None
+    base_url: str | None = None
     max_retries: int = 3
     timeout: int = 30
     temperature: float = 0.7
@@ -32,7 +31,7 @@ class LLMEvaluationConfig:
     enabled: bool = True
     test_suite: str = "regression"
     baseline_model: str = "gpt-4o"
-    comparison_model: Optional[str] = None
+    comparison_model: str | None = None
     tolerance: float = 0.95
     output_dir: str = "eval_results"
 

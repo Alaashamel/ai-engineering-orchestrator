@@ -1,7 +1,7 @@
 import pytest
-import asyncio
-from orchestration.llm_provider import LLMProvider
 from pydantic import BaseModel
+
+from orchestration.llm_provider import LLMProvider
 
 
 class TestResponse(BaseModel):
@@ -35,6 +35,7 @@ class TestLLMProvider:
         assert info["mock_mode"] is True
         assert info["provider"] == "openai"
 
+    @pytest.mark.asyncio
     async def test_mock_response(self):
         provider = LLMProvider()
         result = await provider.generate_structured(
@@ -47,6 +48,7 @@ class TestLLMProvider:
         assert result.status == "pending"
         assert result.count == 1
 
+    @pytest.mark.asyncio
     async def test_stream_structured_mock(self):
         provider = LLMProvider()
         chunks = []

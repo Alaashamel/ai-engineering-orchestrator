@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import Callable, TypeVar, AsyncGenerator
+from collections.abc import AsyncGenerator
+from typing import Any, TypeVar
 
 from pydantic import BaseModel
 

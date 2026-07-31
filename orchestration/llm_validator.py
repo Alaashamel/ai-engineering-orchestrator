@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import json
-from pathlib import Path
 from typing import Any
 
 
@@ -28,9 +26,8 @@ class LLMConfigValidator:
             elif config.max_tokens > 128000:
                 warnings.append("Very high max tokens may increase latency and cost")
 
-        if hasattr(config, "timeout"):
-            if config.timeout < 1:
-                errors.append("Timeout must be at least 1 second")
+        if hasattr(config, "timeout") and config.timeout < 1:
+            errors.append("Timeout must be at least 1 second")
 
         return {
             "valid": len(errors) == 0,

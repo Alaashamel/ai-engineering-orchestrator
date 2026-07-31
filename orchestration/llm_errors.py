@@ -1,9 +1,5 @@
 from __future__ import annotations
 
-from typing import Any, Optional
-
-from pydantic import BaseModel
-
 
 class LLMError(Exception):
     def __init__(
@@ -11,7 +7,7 @@ class LLMError(Exception):
         message: str,
         provider: str = "unknown",
         model: str = "unknown",
-        status_code: Optional[int] = None,
+        status_code: int | None = None,
     ) -> None:
         self.message = message
         self.provider = provider

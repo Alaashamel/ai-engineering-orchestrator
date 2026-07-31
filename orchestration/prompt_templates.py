@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-import os
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 
 class PromptTemplate:
@@ -26,7 +25,7 @@ class PromptTemplate:
         }
 
     @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> "PromptTemplate":
+    def from_dict(cls, data: dict[str, Any]) -> PromptTemplate:
         return cls(
             name=data["name"],
             template=data["template"],
@@ -99,7 +98,7 @@ class PromptTemplateManager:
         with open(path, "w") as f:
             yaml.dump(template.to_dict(), f, default_flow_style=False)
 
-    def get_template(self, name: str) -> Optional[PromptTemplate]:
+    def get_template(self, name: str) -> PromptTemplate | None:
         return self.templates.get(name)
 
     def list_templates(self) -> list[str]:

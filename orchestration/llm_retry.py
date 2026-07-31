@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import asyncio
-import time
-from typing import Callable, TypeVar
+from collections.abc import Callable
+from typing import TypeVar
 
 from orchestration.llm_config import LLMProviderConfig
 
