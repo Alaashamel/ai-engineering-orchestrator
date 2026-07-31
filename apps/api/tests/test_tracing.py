@@ -1,4 +1,5 @@
-from orchestration.tracing import setup_tracing, get_tracer, trace_phase
+from orchestration.tracing import get_tracer, setup_tracing
+
 
 def test_get_tracer_returns_tracer():
     tracer = get_tracer()

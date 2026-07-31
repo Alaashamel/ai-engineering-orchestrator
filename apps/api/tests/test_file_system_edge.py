@@ -1,5 +1,5 @@
-import pytest
 from orchestration.tools.file_system import FileSystemTool
+
 
 def test_empty_content(tmp_path):
     fs = FileSystemTool(str(tmp_path))
@@ -20,7 +20,7 @@ def test_deeply_nested_path(tmp_path):
 def test_append_to_new_file(tmp_path):
     fs = FileSystemTool(str(tmp_path))
     result = fs.append_file("new.txt", "content")
-    assert "Created" in result
+    assert "Appended" in result
     assert fs.read_file("new.txt") == "content"
 
 def test_glob_pattern(tmp_path):

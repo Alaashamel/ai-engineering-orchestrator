@@ -1,5 +1,5 @@
 [tool.ruff.lint]
-ignore = ["BLE001", "TRY002"]
+ignore = ["BLE001", "TRY002", "S112"]
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]

@@ -1,6 +1,7 @@
 from uuid import uuid4
-from datetime import datetime
+
 from src.models.audit_log import AuditLog
+
 
 def test_audit_log_creation():
     log = AuditLog(
