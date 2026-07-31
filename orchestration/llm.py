@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import TypeVar
 
 from dotenv import load_dotenv
-from openai import AsyncOpenAI, APIError, RateLimitError
+from openai import APIError, AsyncOpenAI, RateLimitError
 from pydantic import BaseModel
 
 _load_dotenv = load_dotenv(Path(__file__).resolve().parent.parent / ".env")
@@ -20,7 +20,7 @@ def _extract_jsons(text: str) -> list[str]:
     while i < len(text):
         if text[i] == "{":
             try:
-                obj, idx = decoder.raw_decode(text, i)
+                _obj, idx = decoder.raw_decode(text, i)
                 block = text[i:idx]
                 if block not in results:
                     results.append(block)

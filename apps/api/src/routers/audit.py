@@ -2,12 +2,12 @@ from __future__ import annotations
 
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.models.database import get_db
 from src.models.audit_log import AuditLog
+from src.models.database import get_db
 
 router = APIRouter(prefix="/audit-logs", tags=["audit"])
 

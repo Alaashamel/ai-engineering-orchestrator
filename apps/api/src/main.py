@@ -10,14 +10,15 @@ from src.logger import setup_logging
 from src.middleware import RateLimitMiddleware, RequestIDMiddleware
 from src.models.database import engine
 from src.routers import audit as audit_router
+from src.routers import eval as eval_router
 from src.routers import health, projects, workflows
 
+setup_logging(settings.log_level)
 logger = structlog.get_logger()
 
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI) -> AsyncGenerator:
-    setup_logging(settings.log_level)
     logger.info("Starting AI Software Engineering API")
     try:
         async with engine.begin() as conn:
@@ -79,6 +80,7 @@ app.include_router(health.router)
 app.include_router(projects.router)
 app.include_router(workflows.router)
 app.include_router(audit_router.router)
+app.include_router(eval_router.router)
 
 
 @app.get("/")

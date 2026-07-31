@@ -1,6 +1,14 @@
 from uuid import uuid4
-from datetime import datetime, timezone
-from orchestration.state import Phase, ProjectState, TaskItem, Decision, ApprovalRequest, GeneratedFileRecord
+
+from orchestration.state import (
+    ApprovalRequest,
+    Decision,
+    GeneratedFileRecord,
+    Phase,
+    ProjectState,
+    TaskItem,
+)
+
 
 def test_phase_enum_values():
     assert Phase.DISCOVERY.value == "discovery"
@@ -8,7 +16,7 @@ def test_phase_enum_values():
     assert Phase.FAILED.value == "failed"
 
 def test_project_state_defaults():
-    state = ProjectState(project_id=uuid4(), name="Test")
+    state = ProjectState(project_id=uuid4(), name="Test", description="Test project")
     assert state.phase == Phase.DISCOVERY
     assert state.tasks == []
     assert state.decisions == []

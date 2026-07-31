@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+import logging
 from datetime import datetime, timezone
 from typing import Any
 from uuid import UUID
+
+logger = logging.getLogger(__name__)
 
 
 class AuditLogger:
@@ -56,8 +59,8 @@ class AuditLogger:
                     )
                 await session.commit()
                 self._buffer.clear()
-        except Exception:
-            pass
+        except Exception as exc:
+            logger.warning("Audit flush failed: %s", exc)
 
     @property
     def entries(self) -> list[dict[str, Any]]:

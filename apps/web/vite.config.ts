@@ -8,6 +8,7 @@ export default defineConfig({
       '/workflows': 'http://localhost:8000',
       '/projects': 'http://localhost:8000',
       '/health': 'http://localhost:8000',
+      '/eval': 'http://localhost:8000',
     },
   },
 })
