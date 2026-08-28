@@ -14,11 +14,9 @@ export class ApiError extends Error {
 
 export class NetworkError extends Error {
   constructor(cause: unknown) {
-    super('Unable to reach the API server. Make sure the backend is running.')
+    const detail = cause instanceof Error ? `: ${cause.message}` : ''
+    super(`Unable to reach the API server. Make sure the backend is running.${detail}`)
     this.name = 'NetworkError'
-    if (cause instanceof Error) {
-      this.cause = cause.message
-    }
   }
 }
 
