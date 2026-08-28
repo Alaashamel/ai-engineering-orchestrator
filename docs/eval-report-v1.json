@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "model": "gpt-4o (mock)",
+    "provider": "deterministic-mock",
+    "timestamp": "2026-08-28T18:26:02.787433+00:00",
+    "total": 10,
+    "passed": 10,
+    "failed": 0,
+    "pass_rate": 1.0,
+    "avg_latency_ms": 53.81,
+    "total_cost": 0.0,
+    "total_tokens": 0
+  },
+  "results": [
+    {
+      "test_name": "todos_auth_fastapi",
+      "passed": true,
+      "score": 1.0,
+      "latency_ms": 41.95,
+      "tokens_used": 0,
+      "cost": 0.0,
+      "error": null,
+      "timestamp": "2026-08-28T18:25:24.457681+00:00"
+    },
+    {
+      "test_name": "notes_public_noauth",
+      "passed": true,
+      "score": 1.0,
+      "latency_ms": 22.74,
+      "tokens_used": 0,
+      "cost": 0.0,
+      "error": null,
+      "timestamp": "2026-08-28T18:25:27.839681+00:00"
+    },
+    {
+      "test_name": "products_catalog_backend",
+      "passed": true,
+      "score": 1.0,
+      "latency_ms": 72.44,
+      "tokens_used": 0,
+      "cost": 0.0,
+      "error": null,
+      "timestamp": "2026-08-28T18:25:31.577067+00:00"
+    },
+    {
+      "test_name": "blog_posts_frontend",
+      "passed": true,
+      "score": 1.0,
+      "latency_ms": 76.47,
+      "tokens_used": 0,
+      "cost": 0.0,
+      "error": null,
+      "timestamp": "2026-08-28T18:25:35.861283+00:00"
+    },
+    {
+      "test_name": "task_board_fullstack",
+      "passed": true,
+      "score": 1.0,
+      "latency_ms": 54.59,
+      "tokens_used": 0,
+      "cost": 0.0,
+      "error": null,
+      "timestamp": "2026-08-28T18:25:40.988772+00:00"
+    },
+    {
+      "test_name": "inventory_items_noauth",
+      "passed": true,
+      "score": 1.0,
+      "latency_ms": 64.33,
+      "tokens_used": 0,
+      "cost": 0.0,
+      "error": null,
+      "timestamp": "2026-08-28T18:25:44.528144+00:00"
+    },
+    {
+      "test_name": "orders_public_fallback",
+      "passed": true,
+      "score": 1.0,
+      "latency_ms": 49.41,
+      "tokens_used": 0,
+      "cost": 0.0,
+      "error": null,
+      "timestamp": "2026-08-28T18:25:48.442702+00:00"
+    },
+    {
+      "test_name": "notes_no_security_gate",
+      "passed": true,
+      "score": 1.0,
+      "latency_ms": 51.7,
+      "tokens_used": 0,
+      "cost": 0.0,
+      "error": null,
+      "timestamp": "2026-08-28T18:25:53.131967+00:00"
+    },
+    {
+      "test_name": "todos_api_ui",
+      "passed": true,
+      "score": 1.0,
+      "latency_ms": 60.72,
+      "tokens_used": 0,
+      "cost": 0.0,
+      "error": null,
+      "timestamp": "2026-08-28T18:25:57.535108+00:00"
+    },
+    {
+      "test_name": "products_admin_auth",
+      "passed": true,
+      "score": 1.0,
+      "latency_ms": 43.77,
+      "tokens_used": 0,
+      "cost": 0.0,
+      "error": null,
+      "timestamp": "2026-08-28T18:26:02.787411+00:00"
+    }
+  ]
+}

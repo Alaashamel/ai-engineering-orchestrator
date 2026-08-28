@@ -29,7 +29,7 @@
 <br>
 
 [![Tests](https://img.shields.io/badge/tests-224_passing-brightgreen?style=flat-square)](orchestration/tests)
-[![Test Time](https://img.shields.io/badge/test_time-~10s-blue?style=flat-square)](#testing)
+[![Test Time](https://img.shields.io/badge/test_time-~80s-blue?style=flat-square)](#testing)
 [![Lint](https://img.shields.io/badge/lint-ruff_%2B_tsc-4B32C3?style=flat-square)](#testing)
 [![Security](https://img.shields.io/badge/security-bandit_audited-ff5722?style=flat-square)](#testing)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
@@ -64,6 +64,14 @@ The **AI Engineering Orchestrator** is a production-grade autonomous software fa
 **What it does in one sentence:** you describe a project, and a coordinated team of AI agents (CEO, Product Manager, Architect, Backend/Frontend/QA Engineers) analyzes it, plans it, designs it, builds it, tests it, and presents the result for your approval.
 
 **No API key? No problem.** The system runs in **mock mode** — the LLM provider automatically detects a missing key or exhausted quota and returns schema-valid deterministic responses. Every feature works for development, testing, and CI with zero external credentials.
+
+> **Honesty note on what "works" means here.** The end-to-end evidence in this
+> repo (Phase 1 proof run + Phase 2 10-prompt eval sweep) was executed in
+> **mock mode**: the pipeline completed, generated runnable FastAPI projects,
+> and each generated project's own pytest suite passed. Real-mode generation
+> still needs an API key with quota — in this workspace every real completion
+> returns HTTP `429 insufficient_quota` — so token usage / cost figures are not
+> populated by a live run yet (see [docs/roadmap.md](docs/roadmap.md)).
 
 ---
 
@@ -143,6 +151,8 @@ The Orchestrator treats AI software development as an **engineering process**, n
       └─────────────┘      └───────────────┘     └──────────────┘
 ```
 
+Let me also annotate the bottom boxes — in mock mode persistence is SQLite, and PostgreSQL + pgvector / Redis are **optional infra** (defined in docker-compose, exercised in tests that skip without a live DB). Webhooks and WebSocket streaming are implemented and unit-tested but not yet demonstrated on a live workflow run.
+
 ### Agent Pipeline
 
 | Agent | Responsibility | Typed output (Pydantic) |
@@ -162,20 +172,28 @@ Between the agents and the model provider sits a **40+ module abstraction layer*
 
 ## ⚙️ Core Features
 
-| Feature | Details |
-|---------|---------|
-| 🤖 **Six-agent orchestration** | CEO → PM → Architect → Engineering agents, driven by a deterministic LangGraph state machine |
-| 🧠 **Structured LLM output** | Every agent must return a valid Pydantic model — schema-guaranteed, never free-form |
-| 🔄 **Automatic mock fallback** | Missing API key or `insufficient_quota` → graceful, logged switch to deterministic mock mode |
-| 👤 **Human-in-the-loop** | Approval gates for critical tasks; reject with reason; roll back to any earlier phase |
-| 📊 **Evaluation harness** | `EvalDataset` (JSON/CSV), markdown `EvalReport`s, and an `ABTestFramework` for model comparison |
-| 📝 **Prompt versioning** | Semantic `major.minor` versions, unified diffs, tags, and rollback via `PromptRegistry` |
-| 💰 **Cost & metrics tracking** | Per-request `TokenUsage`, cumulative cost, request/latency metrics, exposed via `/eval/*` API |
-| 🔐 **Audit trail** | Every phase, decision, and generated file is logged via the structured audit logger |
-| 🌐 **Real-time streaming** | WebSocket broadcasts of `workflow_complete` / `approval_resolved` / `workflow_error` |
-| 🔔 **Webhook notifications** | `workflow.completed` events pushed to configured webhook URLs |
-| 🛡️ **Security hardening** | Sandboxed file tools, secret management, rate limiting (prod), CORS, bandit audit in CI |
-| 📦 **Containerized** | Docker Compose for dev (hot reload) and production, GHCR image publishing |
+Proof legend: **✅ proven** — demonstrated by the repo's own runs ([Phase 1](examples/todo-api/RESULT.md), [Phase 2 eval](docs/eval-report-v1.md)) or the passing unit/API suites. **🧪 declared** — implemented + unit-tested, but not demonstrated end-to-end this session (see [docs/roadmap.md](docs/roadmap.md)).
+
+| Feature | Details | Proof |
+|---------|---------|-------|
+| 🤖 **Six-agent orchestration** | CEO → PM → Architect → Engineering agents, driven by a deterministic LangGraph state machine | ✅ proven (full pipeline runs end-to-end in mock mode) |
+| 🧠 **Structured LLM output** | Every agent must return a valid Pydantic model — schema-guaranteed, never free-form | ✅ proven |
+| 🔄 **Automatic mock fallback** | Missing API key or `insufficient_quota` → graceful, logged switch to deterministic mock mode | ✅ proven |
+| 👤 **Human-in-the-loop** | Approval records raised for critical tasks; approve / reject with reason / rollback routing | 🧪 API + schema-level, unit-tested; no live pause loop demonstrated |
+| 📊 **Evaluation harness** | `EvalDataset` (JSON/CSV), markdown `EvalReport`s, `ABTestFramework` | ✅ proven — used to produce `docs/eval-report-v1.md` |
+| 📝 **Prompt versioning** | Semantic `major.minor` versions, unified diffs, tags, rollback via `PromptRegistry` | 🧪 unit-tested (no live run) |
+| 💰 **Cost & metrics tracking** | `LLMCostTracker`, TokenUsage, latency metrics via `/eval/*` API | 🧪 unit-tested; stay $0 in mock mode (no quota-backed live run) |
+| 🔐 **Audit trail** | Phase/decision/file logging via structured audit logger | 🧪 unit-tested; not demonstrated on a live run |
+| 🌐 **Real-time streaming** | WebSocket manager + `workflow_*` event types | 🧪 unit-tested; not demonstrated end-to-end |
+| 🔔 **Webhook notifications** | `workflow.completed` events sent to configured URLs w/ signature validation | 🧪 unit-tested; no live delivery to an external URL |
+| 🛡️ **Security hardening** | `FileSystemTool` (project-root confined), secret handling, rate limiting, CORS, bandit audit in CI | 🧪 rate-limit + file-edge unit-tested |
+| 📦 **Containerized** | Docker Compose for dev and prod, GHCR publishing workflow | 🧪 defined + CI workflow; no deploy demonstrated |
+
+**What user-visible deliverable does mock mode produce per request?** A
+self-contained FastAPI project (SQLAlchemy + SQLite CRUD, optional JWT auth)
+plus — when the request mentions a UI — a minimal React/TypeScript scaffold, with
+a pytest suite that passes against the generated code. See
+[`examples/todo-api`](examples/todo-api/) for a full generated example.
 
 ---
 
@@ -229,7 +247,41 @@ discovery → planning → architecture → task_decomposition → [human gate] 
 | **Projects** | Create/list/manage projects with status badges, descriptions, and one-click workflow access |
 | **Workflow** | Live phase timeline with rollback buttons, approval cards, task list, generated files, decisions, errors, and implementation log |
 
-**Run it locally** (no API key required) and see the whole pipeline work:
+**Proof without a UI:** the mock-mode pipeline and the artifacts it produces are
+checked into this repo:
+- [`examples/todo-api/RESULT.md`](examples/todo-api/RESULT.md) — phases, timing,
+  14 generated files, generated project's own 6-test suite passing;
+- [`docs/eval-report-v1.md`](docs/eval-report-v1.md) — 10-prompt sweep, all green;
+- [`examples/todo-api/`](examples/todo-api/) — the generated FastAPI project itself.
+
+**Run the pipeline headlessly:**
+
+```bash
+$env:PYTHONPATH="<repo-root>" ; .venv/Scripts/python scripts/prove_core_loop.py --force-mock
+```
+
+**60-second terminal walkthrough** (paced, projector-friendly replay of one full
+pipeline run — prompt, phases, tasks, approvals, generated files, passing tests):
+
+```bash
+$env:PYTHONPATH="<repo-root>" ; .venv/Scripts/python scripts/walkthrough.py
+```
+
+Typical transcript tail (from the checked-in run in `examples/walkthrough/`):
+
+```
+[Task plan] 5 tasks
+  - [backend_engineer] Build data models
+  - [backend_engineer] Implement REST CRUD router
+  - [backend_engineer] Add JWT authentication
+  ...
+[Approval gate] 3 approval record(s) raised for critical tasks
+[Generated files] 12 written under examples/walkthrough/
+[Quality gate] running the generated project's own test suite
+  PASS - passed=6 failed=0 skipped=0 returncode=0
+```
+
+**Run it locally** (no API key required) and see the whole pipeline work through the dashboard:
 
 ```bash
 make dev-api && make dev-web    # http://localhost:8000  ·  http://localhost:5173
@@ -305,7 +357,8 @@ make lint              # ruff (Python) + tsc (TypeScript)
 | API tests | 43 | ✅ all passing |
 | Skipped (require live DB) | 3 | ⏭️ expected |
 
-**Current status: `224 passed · 3 skipped · 0 failed` in ~10s.**
+**Current status: `224 passed · 3 skipped · 0 failed`** (measured ~75s for the API
+suite incl. startup, <1s for orchestration).
 
 ### The end-to-end evaluation suite
 
@@ -316,6 +369,21 @@ $env:PYTHONPATH="<repo-root>" ; .venv/Scripts/python orchestration/tests/test_ev
 ```
 
 It covers provider auto-fallback, A/B model comparison (wins/ties/confidence), markdown report generation, prompt versioning with diffs/tags/rollback, and metrics collection.
+
+### Prompt sweep (what you get per prompt variation)
+
+To re-run the 10-case mock-mode sweep that produced `docs/eval-report-v1.md`
+(raises the pipeline for each prompt, then executes each generated project's own
+pytest suite):
+
+```bash
+$env:PYTHONPATH="<repo-root>" ; .venv/Scripts/python scripts/eval_sweep.py
+```
+
+Outputs: `docs/eval-report-v1.md` / `.json`, `docs/eval-dataset-v1.json`, and
+`docs/eval-sweep-raw.json` (full per-case evidence).
+Latest result: **10/10 prompts complete, spec-correct, and pass their generated
+tests** — see the report for latency, tree metadata, and determinism check.
 
 ---
 
@@ -353,17 +421,21 @@ Every push/PR runs `ci.yml` — **ruff + bandit** security scan, **tsc** type-ch
 
 ## 🗺️ Roadmap
 
+Detailed, evidence-linked status lives in **[docs/roadmap.md](docs/roadmap.md)**.
+The short version:
+
 | # | Milestone | Status |
 |---|-----------|--------|
-| 1 | Monorepo scaffold — FastAPI + React + Docker + CI | ✅ Done |
-| 2 | LangGraph orchestration engine — planning agents, streaming | ✅ Done |
-| 3 | Engineering agents — Backend/Frontend/QA + file I/O tools | ✅ Done |
-| 4 | Human-in-the-loop — approvals, rollback, observability | ✅ Done |
-| 5 | Real LLM integration — provider layer, eval harness, A/B testing | ✅ Done |
-| 6 | Security audit — vulnerability scanning, secret management | ✅ Done |
-| 7 | Production deployment — Docker Compose, monitoring, auto-scaling | ✅ Done |
+| 1 | Core orchestration pipeline (agents, phases, structured output) | ✅ proven in mock mode (Phase 1 + Phase 2 runs) |
+| 2 | LLM abstraction layer + mock fallback (40+ modules) | ✅ proven (unit + end-to-end) |
+| 3 | Eval harness (dataset / report / A/B) | ✅ proven — `docs/eval-report-v1.md` |
+| 4 | Generated code that **runs and passes its own tests** | ✅ proven in mock mode |
+| 5 | Real LLM generation with live token/cost numbers | 🧪 blocked here (quota) — see roadmap Milestone 1 |
+| 6 | Postgres + pgvector persistence, Redis, webhooks/websocket live delivery | 🧪 implemented, unit-tested, not demonstrated live |
+| 7 | Multi-provider support, checkpointing, dashboard E2E approval loop | 🔜 next up |
 
-**Next up:** multi-provider support (Anthropic / Gemini) through the existing factory, persistent workflow checkpointing to PostgreSQL, vector-similarity task retrieval with pgvector, and a live workflow timeline in the dashboard.
+**Next up:** a quota-backed key to move milestone 5 to "proven", then the
+Postgres-backed persistence milestone. Full list in [docs/roadmap.md](docs/roadmap.md).
 
 ---
 

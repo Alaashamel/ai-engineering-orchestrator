@@ -235,20 +235,30 @@ class OrchestrationEngine:
 
     async def _check_approvals_node(self, state: GraphState) -> dict:
         updates: dict = {}
-        critical_tasks = [t for t in state.get("tasks", []) if t.get("priority") == "critical"]
-        if critical_tasks:
-            approvals = list(state.get("pending_approvals", []))
-            for t in critical_tasks:
-                approvals.append({
-                    "id": f"approval_{t['id']}",
-                    "action": f"Execute task: {t['title']}",
-                    "description": t.get("description", ""),
-                    "risk_level": "medium",
-                    "proposed_by": "ceo",
-                    "status": "pending",
-                    "created_at": datetime.now(timezone.utc).isoformat(),
-                })
-            updates["pending_approvals"] = approvals
+        pending_critical = [
+            t for t in state.get("tasks", [])
+            if t.get("priority") == "critical" and t.get("status") == "pending"
+        ]
+        if not pending_critical:
+            return updates
+        approvals = list(state.get("pending_approvals", []))
+        existing_ids = {a.get("id") for a in approvals}
+        new_approvals = []
+        for t in pending_critical:
+            approval_id = f"approval_{t['id']}"
+            if approval_id in existing_ids:
+                continue
+            new_approvals.append({
+                "id": approval_id,
+                "action": f"Execute task: {t['title']}",
+                "description": t.get("description", ""),
+                "risk_level": "medium",
+                "proposed_by": "ceo",
+                "status": "pending",
+                "created_at": datetime.now(timezone.utc).isoformat(),
+            })
+        if new_approvals:
+            updates["pending_approvals"] = approvals + new_approvals
             updates["human_approval_needed"] = True
         return updates
 

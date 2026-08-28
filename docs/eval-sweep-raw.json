@@ -1,0 +1,1210 @@
+[
+  {
+    "case": "todos_auth_fastapi",
+    "evidence": {
+      "final_phase": "completed",
+      "phase_history": [
+        "discovery",
+        "planning",
+        "architecture",
+        "task_decomposition",
+        "implementation",
+        "completed"
+      ],
+      "phase_timing_ms": [
+        {
+          "node": "discovery",
+          "wall_ms": 17.1
+        },
+        {
+          "node": "planning",
+          "wall_ms": 1.36
+        },
+        {
+          "node": "architecture",
+          "wall_ms": 1.04
+        },
+        {
+          "node": "task_decomposition",
+          "wall_ms": 1.06
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 0.84
+        },
+        {
+          "node": "implementation",
+          "wall_ms": 18.37
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 0.93
+        },
+        {
+          "node": "complete",
+          "wall_ms": 1.17
+        }
+      ],
+      "pipeline_wall_ms": 41.95,
+      "decisions": 4,
+      "tasks": 5,
+      "errors": [],
+      "generated_files": [
+        {
+          "path": "auth.py",
+          "size_bytes": 1543
+        },
+        {
+          "path": "database.py",
+          "size_bytes": 410
+        },
+        {
+          "path": "main.py",
+          "size_bytes": 347
+        },
+        {
+          "path": "models.py",
+          "size_bytes": 972
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 187
+        },
+        {
+          "path": "requirements.txt",
+          "size_bytes": 52
+        },
+        {
+          "path": "routers/__init__.py",
+          "size_bytes": 0
+        },
+        {
+          "path": "routers/auth.py",
+          "size_bytes": 1189
+        },
+        {
+          "path": "routers/resources.py",
+          "size_bytes": 2015
+        },
+        {
+          "path": "schemas.py",
+          "size_bytes": 835
+        },
+        {
+          "path": "tests/conftest.py",
+          "size_bytes": 862
+        },
+        {
+          "path": "tests/test_todos.py",
+          "size_bytes": 1831
+        }
+      ],
+      "spec_check": {
+        "expected": {
+          "table": "todos",
+          "has_auth": true,
+          "has_frontend": false
+        },
+        "ok": true,
+        "problems": []
+      },
+      "generated_test_run": {
+        "attempted": true,
+        "command": "D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Scripts\\python.exe -m pytest -q --no-header -p no:cacheprovider",
+        "returncode": 0,
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0,
+        "output_tail": "47: InsecureKeyLengthWarning: The HMAC key is 31 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.\r\n    return self._jws.encode(\r\n\r\ntests/test_todos.py::test_crud_roundtrip\r\ntests/test_todos.py::test_crud_roundtrip\r\ntests/test_todos.py::test_crud_roundtrip\r\ntests/test_todos.py::test_crud_roundtrip\r\ntests/test_todos.py::test_crud_404_for_missing\r\n  D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Lib\\site-packages\\jwt\\api_jwt.py:368: InsecureKeyLengthWarning: The HMAC key is 31 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.\r\n    decoded = self.decode_complete(\r\n\r\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\r\n6 passed, 9 warnings in 0.81s\r\n"
+      },
+      "llm_calls": 6,
+      "mode": "mock",
+      "cost_usd": 0.0,
+      "tokens": 0
+    }
+  },
+  {
+    "case": "notes_public_noauth",
+    "evidence": {
+      "final_phase": "completed",
+      "phase_history": [
+        "discovery",
+        "planning",
+        "architecture",
+        "task_decomposition",
+        "implementation",
+        "completed"
+      ],
+      "phase_timing_ms": [
+        {
+          "node": "discovery",
+          "wall_ms": 2.4
+        },
+        {
+          "node": "planning",
+          "wall_ms": 1.03
+        },
+        {
+          "node": "architecture",
+          "wall_ms": 1.13
+        },
+        {
+          "node": "task_decomposition",
+          "wall_ms": 1.02
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 0.67
+        },
+        {
+          "node": "implementation",
+          "wall_ms": 15.15
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 0.75
+        },
+        {
+          "node": "complete",
+          "wall_ms": 0.51
+        }
+      ],
+      "pipeline_wall_ms": 22.74,
+      "decisions": 4,
+      "tasks": 5,
+      "errors": [],
+      "generated_files": [
+        {
+          "path": "database.py",
+          "size_bytes": 410
+        },
+        {
+          "path": "main.py",
+          "size_bytes": 285
+        },
+        {
+          "path": "models.py",
+          "size_bytes": 593
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 187
+        },
+        {
+          "path": "requirements.txt",
+          "size_bytes": 52
+        },
+        {
+          "path": "routers/__init__.py",
+          "size_bytes": 0
+        },
+        {
+          "path": "routers/resources.py",
+          "size_bytes": 1688
+        },
+        {
+          "path": "schemas.py",
+          "size_bytes": 490
+        },
+        {
+          "path": "tests/conftest.py",
+          "size_bytes": 862
+        },
+        {
+          "path": "tests/test_notes.py",
+          "size_bytes": 790
+        }
+      ],
+      "spec_check": {
+        "expected": {
+          "table": "notes",
+          "has_auth": false,
+          "has_frontend": false
+        },
+        "ok": true,
+        "problems": []
+      },
+      "generated_test_run": {
+        "attempted": true,
+        "command": "D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Scripts\\python.exe -m pytest -q --no-header -p no:cacheprovider",
+        "returncode": 0,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "output_tail": "...                                                                      [100%]\r\n============================== warnings summary ===============================\r\n..\\..\\..\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1\r\n  D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\r\n    from starlette.testclient import TestClient as TestClient  # noqa\r\n\r\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\r\n3 passed, 1 warning in 0.07s\r\n"
+      },
+      "llm_calls": 12,
+      "mode": "mock",
+      "cost_usd": 0.0,
+      "tokens": 0
+    }
+  },
+  {
+    "case": "products_catalog_backend",
+    "evidence": {
+      "final_phase": "completed",
+      "phase_history": [
+        "discovery",
+        "planning",
+        "architecture",
+        "task_decomposition",
+        "implementation",
+        "completed"
+      ],
+      "phase_timing_ms": [
+        {
+          "node": "discovery",
+          "wall_ms": 2.33
+        },
+        {
+          "node": "planning",
+          "wall_ms": 1.06
+        },
+        {
+          "node": "architecture",
+          "wall_ms": 0.97
+        },
+        {
+          "node": "task_decomposition",
+          "wall_ms": 1.33
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 1.0
+        },
+        {
+          "node": "implementation",
+          "wall_ms": 64.24
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 0.82
+        },
+        {
+          "node": "complete",
+          "wall_ms": 0.6
+        }
+      ],
+      "pipeline_wall_ms": 72.44,
+      "decisions": 4,
+      "tasks": 5,
+      "errors": [],
+      "generated_files": [
+        {
+          "path": "database.py",
+          "size_bytes": 410
+        },
+        {
+          "path": "main.py",
+          "size_bytes": 285
+        },
+        {
+          "path": "models.py",
+          "size_bytes": 599
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 190
+        },
+        {
+          "path": "requirements.txt",
+          "size_bytes": 52
+        },
+        {
+          "path": "routers/__init__.py",
+          "size_bytes": 0
+        },
+        {
+          "path": "routers/resources.py",
+          "size_bytes": 1739
+        },
+        {
+          "path": "schemas.py",
+          "size_bytes": 508
+        },
+        {
+          "path": "tests/conftest.py",
+          "size_bytes": 862
+        },
+        {
+          "path": "tests/test_products.py",
+          "size_bytes": 808
+        }
+      ],
+      "spec_check": {
+        "expected": {
+          "table": "products",
+          "has_auth": false,
+          "has_frontend": false
+        },
+        "ok": true,
+        "problems": []
+      },
+      "generated_test_run": {
+        "attempted": true,
+        "command": "D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Scripts\\python.exe -m pytest -q --no-header -p no:cacheprovider",
+        "returncode": 0,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "output_tail": "...                                                                      [100%]\r\n============================== warnings summary ===============================\r\n..\\..\\..\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1\r\n  D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\r\n    from starlette.testclient import TestClient as TestClient  # noqa\r\n\r\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\r\n3 passed, 1 warning in 0.11s\r\n"
+      },
+      "llm_calls": 18,
+      "mode": "mock",
+      "cost_usd": 0.0,
+      "tokens": 0
+    }
+  },
+  {
+    "case": "blog_posts_frontend",
+    "evidence": {
+      "final_phase": "completed",
+      "phase_history": [
+        "discovery",
+        "planning",
+        "architecture",
+        "task_decomposition",
+        "implementation",
+        "completed"
+      ],
+      "phase_timing_ms": [
+        {
+          "node": "discovery",
+          "wall_ms": 2.6
+        },
+        {
+          "node": "planning",
+          "wall_ms": 1.24
+        },
+        {
+          "node": "architecture",
+          "wall_ms": 1.41
+        },
+        {
+          "node": "task_decomposition",
+          "wall_ms": 1.16
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 2.76
+        },
+        {
+          "node": "implementation",
+          "wall_ms": 65.94
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 0.73
+        },
+        {
+          "node": "complete",
+          "wall_ms": 0.55
+        }
+      ],
+      "pipeline_wall_ms": 76.47,
+      "decisions": 4,
+      "tasks": 6,
+      "errors": [],
+      "generated_files": [
+        {
+          "path": "database.py",
+          "size_bytes": 410
+        },
+        {
+          "path": "frontend/src/api.ts",
+          "size_bytes": 176
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "size_bytes": 300
+        },
+        {
+          "path": "main.py",
+          "size_bytes": 285
+        },
+        {
+          "path": "models.py",
+          "size_bytes": 593
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 187
+        },
+        {
+          "path": "requirements.txt",
+          "size_bytes": 52
+        },
+        {
+          "path": "routers/__init__.py",
+          "size_bytes": 0
+        },
+        {
+          "path": "routers/resources.py",
+          "size_bytes": 1688
+        },
+        {
+          "path": "schemas.py",
+          "size_bytes": 490
+        },
+        {
+          "path": "tests/conftest.py",
+          "size_bytes": 862
+        },
+        {
+          "path": "tests/test_posts.py",
+          "size_bytes": 790
+        }
+      ],
+      "spec_check": {
+        "expected": {
+          "table": "posts",
+          "has_auth": false,
+          "has_frontend": true
+        },
+        "ok": true,
+        "problems": []
+      },
+      "generated_test_run": {
+        "attempted": true,
+        "command": "D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Scripts\\python.exe -m pytest -q --no-header -p no:cacheprovider",
+        "returncode": 0,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "output_tail": "...                                                                      [100%]\r\n============================== warnings summary ===============================\r\n..\\..\\..\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1\r\n  D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\r\n    from starlette.testclient import TestClient as TestClient  # noqa\r\n\r\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\r\n3 passed, 1 warning in 0.14s\r\n"
+      },
+      "llm_calls": 25,
+      "mode": "mock",
+      "cost_usd": 0.0,
+      "tokens": 0
+    }
+  },
+  {
+    "case": "task_board_fullstack",
+    "evidence": {
+      "final_phase": "completed",
+      "phase_history": [
+        "discovery",
+        "planning",
+        "architecture",
+        "task_decomposition",
+        "implementation",
+        "completed"
+      ],
+      "phase_timing_ms": [
+        {
+          "node": "discovery",
+          "wall_ms": 4.27
+        },
+        {
+          "node": "planning",
+          "wall_ms": 1.06
+        },
+        {
+          "node": "architecture",
+          "wall_ms": 1.25
+        },
+        {
+          "node": "task_decomposition",
+          "wall_ms": 1.24
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 1.17
+        },
+        {
+          "node": "implementation",
+          "wall_ms": 43.73
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 0.94
+        },
+        {
+          "node": "complete",
+          "wall_ms": 0.79
+        }
+      ],
+      "pipeline_wall_ms": 54.59,
+      "decisions": 4,
+      "tasks": 6,
+      "errors": [],
+      "generated_files": [
+        {
+          "path": "auth.py",
+          "size_bytes": 1543
+        },
+        {
+          "path": "database.py",
+          "size_bytes": 410
+        },
+        {
+          "path": "frontend/src/api.ts",
+          "size_bytes": 176
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "size_bytes": 300
+        },
+        {
+          "path": "main.py",
+          "size_bytes": 347
+        },
+        {
+          "path": "models.py",
+          "size_bytes": 972
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 187
+        },
+        {
+          "path": "requirements.txt",
+          "size_bytes": 52
+        },
+        {
+          "path": "routers/__init__.py",
+          "size_bytes": 0
+        },
+        {
+          "path": "routers/auth.py",
+          "size_bytes": 1189
+        },
+        {
+          "path": "routers/resources.py",
+          "size_bytes": 2015
+        },
+        {
+          "path": "schemas.py",
+          "size_bytes": 835
+        },
+        {
+          "path": "tests/conftest.py",
+          "size_bytes": 862
+        },
+        {
+          "path": "tests/test_tasks.py",
+          "size_bytes": 1831
+        }
+      ],
+      "spec_check": {
+        "expected": {
+          "table": "tasks",
+          "has_auth": true,
+          "has_frontend": true
+        },
+        "ok": true,
+        "problems": []
+      },
+      "generated_test_run": {
+        "attempted": true,
+        "command": "D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Scripts\\python.exe -m pytest -q --no-header -p no:cacheprovider",
+        "returncode": 0,
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0,
+        "output_tail": "47: InsecureKeyLengthWarning: The HMAC key is 31 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.\r\n    return self._jws.encode(\r\n\r\ntests/test_tasks.py::test_crud_roundtrip\r\ntests/test_tasks.py::test_crud_roundtrip\r\ntests/test_tasks.py::test_crud_roundtrip\r\ntests/test_tasks.py::test_crud_roundtrip\r\ntests/test_tasks.py::test_crud_404_for_missing\r\n  D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Lib\\site-packages\\jwt\\api_jwt.py:368: InsecureKeyLengthWarning: The HMAC key is 31 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.\r\n    decoded = self.decode_complete(\r\n\r\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\r\n6 passed, 9 warnings in 1.02s\r\n"
+      },
+      "llm_calls": 32,
+      "mode": "mock",
+      "cost_usd": 0.0,
+      "tokens": 0
+    }
+  },
+  {
+    "case": "inventory_items_noauth",
+    "evidence": {
+      "final_phase": "completed",
+      "phase_history": [
+        "discovery",
+        "planning",
+        "architecture",
+        "task_decomposition",
+        "implementation",
+        "completed"
+      ],
+      "phase_timing_ms": [
+        {
+          "node": "discovery",
+          "wall_ms": 2.5
+        },
+        {
+          "node": "planning",
+          "wall_ms": 1.09
+        },
+        {
+          "node": "architecture",
+          "wall_ms": 1.05
+        },
+        {
+          "node": "task_decomposition",
+          "wall_ms": 1.37
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 0.76
+        },
+        {
+          "node": "implementation",
+          "wall_ms": 56.04
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 0.85
+        },
+        {
+          "node": "complete",
+          "wall_ms": 0.59
+        }
+      ],
+      "pipeline_wall_ms": 64.33,
+      "decisions": 4,
+      "tasks": 5,
+      "errors": [],
+      "generated_files": [
+        {
+          "path": "database.py",
+          "size_bytes": 410
+        },
+        {
+          "path": "main.py",
+          "size_bytes": 285
+        },
+        {
+          "path": "models.py",
+          "size_bytes": 593
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 187
+        },
+        {
+          "path": "requirements.txt",
+          "size_bytes": 52
+        },
+        {
+          "path": "routers/__init__.py",
+          "size_bytes": 0
+        },
+        {
+          "path": "routers/resources.py",
+          "size_bytes": 1688
+        },
+        {
+          "path": "schemas.py",
+          "size_bytes": 490
+        },
+        {
+          "path": "tests/conftest.py",
+          "size_bytes": 862
+        },
+        {
+          "path": "tests/test_items.py",
+          "size_bytes": 790
+        }
+      ],
+      "spec_check": {
+        "expected": {
+          "table": "items",
+          "has_auth": false,
+          "has_frontend": false
+        },
+        "ok": true,
+        "problems": []
+      },
+      "generated_test_run": {
+        "attempted": true,
+        "command": "D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Scripts\\python.exe -m pytest -q --no-header -p no:cacheprovider",
+        "returncode": 0,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "output_tail": "...                                                                      [100%]\r\n============================== warnings summary ===============================\r\n..\\..\\..\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1\r\n  D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\r\n    from starlette.testclient import TestClient as TestClient  # noqa\r\n\r\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\r\n3 passed, 1 warning in 0.10s\r\n"
+      },
+      "llm_calls": 38,
+      "mode": "mock",
+      "cost_usd": 0.0,
+      "tokens": 0
+    }
+  },
+  {
+    "case": "orders_public_fallback",
+    "evidence": {
+      "final_phase": "completed",
+      "phase_history": [
+        "discovery",
+        "planning",
+        "architecture",
+        "task_decomposition",
+        "implementation",
+        "completed"
+      ],
+      "phase_timing_ms": [
+        {
+          "node": "discovery",
+          "wall_ms": 2.34
+        },
+        {
+          "node": "planning",
+          "wall_ms": 1.19
+        },
+        {
+          "node": "architecture",
+          "wall_ms": 1.35
+        },
+        {
+          "node": "task_decomposition",
+          "wall_ms": 1.24
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 0.76
+        },
+        {
+          "node": "implementation",
+          "wall_ms": 41.14
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 0.76
+        },
+        {
+          "node": "complete",
+          "wall_ms": 0.52
+        }
+      ],
+      "pipeline_wall_ms": 49.41,
+      "decisions": 4,
+      "tasks": 5,
+      "errors": [],
+      "generated_files": [
+        {
+          "path": "database.py",
+          "size_bytes": 410
+        },
+        {
+          "path": "main.py",
+          "size_bytes": 285
+        },
+        {
+          "path": "models.py",
+          "size_bytes": 593
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 187
+        },
+        {
+          "path": "requirements.txt",
+          "size_bytes": 52
+        },
+        {
+          "path": "routers/__init__.py",
+          "size_bytes": 0
+        },
+        {
+          "path": "routers/resources.py",
+          "size_bytes": 1688
+        },
+        {
+          "path": "schemas.py",
+          "size_bytes": 490
+        },
+        {
+          "path": "tests/conftest.py",
+          "size_bytes": 862
+        },
+        {
+          "path": "tests/test_items.py",
+          "size_bytes": 790
+        }
+      ],
+      "spec_check": {
+        "expected": {
+          "table": "items",
+          "has_auth": false,
+          "has_frontend": false
+        },
+        "ok": true,
+        "problems": []
+      },
+      "generated_test_run": {
+        "attempted": true,
+        "command": "D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Scripts\\python.exe -m pytest -q --no-header -p no:cacheprovider",
+        "returncode": 0,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "output_tail": "...                                                                      [100%]\r\n============================== warnings summary ===============================\r\n..\\..\\..\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1\r\n  D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\r\n    from starlette.testclient import TestClient as TestClient  # noqa\r\n\r\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\r\n3 passed, 1 warning in 0.10s\r\n"
+      },
+      "llm_calls": 44,
+      "mode": "mock",
+      "cost_usd": 0.0,
+      "tokens": 0
+    }
+  },
+  {
+    "case": "notes_no_security_gate",
+    "evidence": {
+      "final_phase": "completed",
+      "phase_history": [
+        "discovery",
+        "planning",
+        "architecture",
+        "task_decomposition",
+        "implementation",
+        "completed"
+      ],
+      "phase_timing_ms": [
+        {
+          "node": "discovery",
+          "wall_ms": 2.21
+        },
+        {
+          "node": "planning",
+          "wall_ms": 1.23
+        },
+        {
+          "node": "architecture",
+          "wall_ms": 1.43
+        },
+        {
+          "node": "task_decomposition",
+          "wall_ms": 1.19
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 0.89
+        },
+        {
+          "node": "implementation",
+          "wall_ms": 42.69
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 1.09
+        },
+        {
+          "node": "complete",
+          "wall_ms": 0.86
+        }
+      ],
+      "pipeline_wall_ms": 51.7,
+      "decisions": 4,
+      "tasks": 5,
+      "errors": [],
+      "generated_files": [
+        {
+          "path": "database.py",
+          "size_bytes": 410
+        },
+        {
+          "path": "main.py",
+          "size_bytes": 285
+        },
+        {
+          "path": "models.py",
+          "size_bytes": 593
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 187
+        },
+        {
+          "path": "requirements.txt",
+          "size_bytes": 52
+        },
+        {
+          "path": "routers/__init__.py",
+          "size_bytes": 0
+        },
+        {
+          "path": "routers/resources.py",
+          "size_bytes": 1688
+        },
+        {
+          "path": "schemas.py",
+          "size_bytes": 490
+        },
+        {
+          "path": "tests/conftest.py",
+          "size_bytes": 862
+        },
+        {
+          "path": "tests/test_notes.py",
+          "size_bytes": 790
+        }
+      ],
+      "spec_check": {
+        "expected": {
+          "table": "notes",
+          "has_auth": false,
+          "has_frontend": false
+        },
+        "ok": true,
+        "problems": []
+      },
+      "generated_test_run": {
+        "attempted": true,
+        "command": "D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Scripts\\python.exe -m pytest -q --no-header -p no:cacheprovider",
+        "returncode": 0,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "output_tail": "...                                                                      [100%]\r\n============================== warnings summary ===============================\r\n..\\..\\..\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1\r\n  D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\r\n    from starlette.testclient import TestClient as TestClient  # noqa\r\n\r\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\r\n3 passed, 1 warning in 0.17s\r\n"
+      },
+      "llm_calls": 50,
+      "mode": "mock",
+      "cost_usd": 0.0,
+      "tokens": 0
+    }
+  },
+  {
+    "case": "todos_api_ui",
+    "evidence": {
+      "final_phase": "completed",
+      "phase_history": [
+        "discovery",
+        "planning",
+        "architecture",
+        "task_decomposition",
+        "implementation",
+        "completed"
+      ],
+      "phase_timing_ms": [
+        {
+          "node": "discovery",
+          "wall_ms": 2.29
+        },
+        {
+          "node": "planning",
+          "wall_ms": 1.07
+        },
+        {
+          "node": "architecture",
+          "wall_ms": 1.06
+        },
+        {
+          "node": "task_decomposition",
+          "wall_ms": 1.1
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 0.74
+        },
+        {
+          "node": "implementation",
+          "wall_ms": 52.74
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 1.01
+        },
+        {
+          "node": "complete",
+          "wall_ms": 0.62
+        }
+      ],
+      "pipeline_wall_ms": 60.72,
+      "decisions": 4,
+      "tasks": 6,
+      "errors": [],
+      "generated_files": [
+        {
+          "path": "database.py",
+          "size_bytes": 410
+        },
+        {
+          "path": "frontend/src/api.ts",
+          "size_bytes": 176
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "size_bytes": 300
+        },
+        {
+          "path": "main.py",
+          "size_bytes": 285
+        },
+        {
+          "path": "models.py",
+          "size_bytes": 593
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 187
+        },
+        {
+          "path": "requirements.txt",
+          "size_bytes": 52
+        },
+        {
+          "path": "routers/__init__.py",
+          "size_bytes": 0
+        },
+        {
+          "path": "routers/resources.py",
+          "size_bytes": 1688
+        },
+        {
+          "path": "schemas.py",
+          "size_bytes": 490
+        },
+        {
+          "path": "tests/conftest.py",
+          "size_bytes": 862
+        },
+        {
+          "path": "tests/test_todos.py",
+          "size_bytes": 790
+        }
+      ],
+      "spec_check": {
+        "expected": {
+          "table": "todos",
+          "has_auth": false,
+          "has_frontend": true
+        },
+        "ok": true,
+        "problems": []
+      },
+      "generated_test_run": {
+        "attempted": true,
+        "command": "D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Scripts\\python.exe -m pytest -q --no-header -p no:cacheprovider",
+        "returncode": 0,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "output_tail": "...                                                                      [100%]\r\n============================== warnings summary ===============================\r\n..\\..\\..\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1\r\n  D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Lib\\site-packages\\fastapi\\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\r\n    from starlette.testclient import TestClient as TestClient  # noqa\r\n\r\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\r\n3 passed, 1 warning in 0.17s\r\n"
+      },
+      "llm_calls": 57,
+      "mode": "mock",
+      "cost_usd": 0.0,
+      "tokens": 0
+    }
+  },
+  {
+    "case": "products_admin_auth",
+    "evidence": {
+      "final_phase": "completed",
+      "phase_history": [
+        "discovery",
+        "planning",
+        "architecture",
+        "task_decomposition",
+        "implementation",
+        "completed"
+      ],
+      "phase_timing_ms": [
+        {
+          "node": "discovery",
+          "wall_ms": 5.9
+        },
+        {
+          "node": "planning",
+          "wall_ms": 1.6
+        },
+        {
+          "node": "architecture",
+          "wall_ms": 1.1
+        },
+        {
+          "node": "task_decomposition",
+          "wall_ms": 1.36
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 1.37
+        },
+        {
+          "node": "implementation",
+          "wall_ms": 28.9
+        },
+        {
+          "node": "check_approvals",
+          "wall_ms": 2.65
+        },
+        {
+          "node": "complete",
+          "wall_ms": 0.8
+        }
+      ],
+      "pipeline_wall_ms": 43.77,
+      "decisions": 4,
+      "tasks": 5,
+      "errors": [],
+      "generated_files": [
+        {
+          "path": "auth.py",
+          "size_bytes": 1543
+        },
+        {
+          "path": "database.py",
+          "size_bytes": 410
+        },
+        {
+          "path": "main.py",
+          "size_bytes": 347
+        },
+        {
+          "path": "models.py",
+          "size_bytes": 978
+        },
+        {
+          "path": "README.md",
+          "size_bytes": 190
+        },
+        {
+          "path": "requirements.txt",
+          "size_bytes": 52
+        },
+        {
+          "path": "routers/__init__.py",
+          "size_bytes": 0
+        },
+        {
+          "path": "routers/auth.py",
+          "size_bytes": 1189
+        },
+        {
+          "path": "routers/resources.py",
+          "size_bytes": 2069
+        },
+        {
+          "path": "schemas.py",
+          "size_bytes": 853
+        },
+        {
+          "path": "tests/conftest.py",
+          "size_bytes": 862
+        },
+        {
+          "path": "tests/test_products.py",
+          "size_bytes": 1849
+        }
+      ],
+      "spec_check": {
+        "expected": {
+          "table": "products",
+          "has_auth": true,
+          "has_frontend": false
+        },
+        "ok": true,
+        "problems": []
+      },
+      "generated_test_run": {
+        "attempted": true,
+        "command": "D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Scripts\\python.exe -m pytest -q --no-header -p no:cacheprovider",
+        "returncode": 0,
+        "passed": 6,
+        "failed": 0,
+        "skipped": 0,
+        "output_tail": "LengthWarning: The HMAC key is 31 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.\r\n    return self._jws.encode(\r\n\r\ntests/test_products.py::test_crud_roundtrip\r\ntests/test_products.py::test_crud_roundtrip\r\ntests/test_products.py::test_crud_roundtrip\r\ntests/test_products.py::test_crud_roundtrip\r\ntests/test_products.py::test_crud_404_for_missing\r\n  D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Lib\\site-packages\\jwt\\api_jwt.py:368: InsecureKeyLengthWarning: The HMAC key is 31 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.\r\n    decoded = self.decode_complete(\r\n\r\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\r\n6 passed, 9 warnings in 0.90s\r\n"
+      },
+      "llm_calls": 63,
+      "mode": "mock",
+      "cost_usd": 0.0,
+      "tokens": 0
+    }
+  }
+]

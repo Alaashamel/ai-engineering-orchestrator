@@ -1,0 +1,258 @@
+{
+  "name": "Mock Controller Sweep v1",
+  "cases": [
+    {
+      "name": "todos_auth_fastapi",
+      "prompt": "Build a REST API for a todo list. Features: create/list/update/delete todos, mark complete, and user authentication with JWT tokens. Use FastAPI + SQLAlchemy. Include tests.",
+      "system_prompt": "You are a helpful assistant.",
+      "expected": {
+        "final_phase": "completed",
+        "spec": {
+          "table": "todos",
+          "has_auth": true,
+          "has_frontend": false
+        },
+        "generated_tests_pass": true
+      },
+      "response_model": null,
+      "tags": [
+        "crud",
+        "auth",
+        "tests"
+      ],
+      "metadata": {
+        "table": "todos",
+        "has_auth": true,
+        "has_frontend": false
+      }
+    },
+    {
+      "name": "notes_public_noauth",
+      "prompt": "Build a single-user notes app. CRUD for notes, public, no signup, no login needed. FastAPI backend only. Include tests.",
+      "system_prompt": "You are a helpful assistant.",
+      "expected": {
+        "final_phase": "completed",
+        "spec": {
+          "table": "notes",
+          "has_auth": false,
+          "has_frontend": false
+        },
+        "generated_tests_pass": true
+      },
+      "response_model": null,
+      "tags": [
+        "crud",
+        "noauth",
+        "tests"
+      ],
+      "metadata": {
+        "table": "notes",
+        "has_auth": false,
+        "has_frontend": false
+      }
+    },
+    {
+      "name": "products_catalog_backend",
+      "prompt": "Build a product catalog REST API using FastAPI. CRUD on products with prices and stock. Backend only, no auth. Include pytest tests.",
+      "system_prompt": "You are a helpful assistant.",
+      "expected": {
+        "final_phase": "completed",
+        "spec": {
+          "table": "products",
+          "has_auth": false,
+          "has_frontend": false
+        },
+        "generated_tests_pass": true
+      },
+      "response_model": null,
+      "tags": [
+        "crud",
+        "noauth",
+        "tests"
+      ],
+      "metadata": {
+        "table": "products",
+        "has_auth": false,
+        "has_frontend": false
+      }
+    },
+    {
+      "name": "blog_posts_frontend",
+      "prompt": "Build a blog platform: REST API for posts and comments plus a React web frontend listing posts. No user accounts. FastAPI backend. Include tests.",
+      "system_prompt": "You are a helpful assistant.",
+      "expected": {
+        "final_phase": "completed",
+        "spec": {
+          "table": "posts",
+          "has_auth": false,
+          "has_frontend": true
+        },
+        "generated_tests_pass": true
+      },
+      "response_model": null,
+      "tags": [
+        "crud",
+        "noauth",
+        "frontend",
+        "tests"
+      ],
+      "metadata": {
+        "table": "posts",
+        "has_auth": false,
+        "has_frontend": true
+      }
+    },
+    {
+      "name": "task_board_fullstack",
+      "prompt": "Build a task management web app with React: users log in with password, tasks have titles and due dates. FastAPI + SQLAlchemy. Include tests.",
+      "system_prompt": "You are a helpful assistant.",
+      "expected": {
+        "final_phase": "completed",
+        "spec": {
+          "table": "tasks",
+          "has_auth": true,
+          "has_frontend": true
+        },
+        "generated_tests_pass": true
+      },
+      "response_model": null,
+      "tags": [
+        "crud",
+        "auth",
+        "frontend",
+        "tests"
+      ],
+      "metadata": {
+        "table": "tasks",
+        "has_auth": true,
+        "has_frontend": true
+      }
+    },
+    {
+      "name": "inventory_items_noauth",
+      "prompt": "Build an inventory REST API to manage items and quantities. API only, no UI, no authentication. Include a test suite.",
+      "system_prompt": "You are a helpful assistant.",
+      "expected": {
+        "final_phase": "completed",
+        "spec": {
+          "table": "items",
+          "has_auth": false,
+          "has_frontend": false
+        },
+        "generated_tests_pass": true
+      },
+      "response_model": null,
+      "tags": [
+        "crud",
+        "noauth",
+        "tests"
+      ],
+      "metadata": {
+        "table": "items",
+        "has_auth": false,
+        "has_frontend": false
+      }
+    },
+    {
+      "name": "orders_public_fallback",
+      "prompt": "Build an orders REST API. Public endpoints, no auth. FastAPI. Include tests.",
+      "system_prompt": "You are a helpful assistant.",
+      "expected": {
+        "final_phase": "completed",
+        "spec": {
+          "table": "items",
+          "has_auth": false,
+          "has_frontend": false
+        },
+        "generated_tests_pass": true
+      },
+      "response_model": null,
+      "tags": [
+        "crud",
+        "noauth",
+        "tests",
+        "resource_fallback"
+      ],
+      "metadata": {
+        "table": "items",
+        "has_auth": false,
+        "has_frontend": false
+      }
+    },
+    {
+      "name": "notes_no_security_gate",
+      "prompt": "Generate a FastAPI CRUD service for notes. Single user, no password, no session login. No automated checks are required for this deliverable.",
+      "system_prompt": "You are a helpful assistant.",
+      "expected": {
+        "final_phase": "completed",
+        "spec": {
+          "table": "notes",
+          "has_auth": false,
+          "has_frontend": false
+        },
+        "generated_tests_pass": true
+      },
+      "response_model": null,
+      "tags": [
+        "crud",
+        "noauth"
+      ],
+      "metadata": {
+        "table": "notes",
+        "has_auth": false,
+        "has_frontend": false
+      }
+    },
+    {
+      "name": "todos_api_ui",
+      "prompt": "Build a REST API for a todo list plus a simple UI page listing todos. Public read-only, no login. FastAPI.",
+      "system_prompt": "You are a helpful assistant.",
+      "expected": {
+        "final_phase": "completed",
+        "spec": {
+          "table": "todos",
+          "has_auth": false,
+          "has_frontend": true
+        },
+        "generated_tests_pass": true
+      },
+      "response_model": null,
+      "tags": [
+        "crud",
+        "noauth",
+        "frontend"
+      ],
+      "metadata": {
+        "table": "todos",
+        "has_auth": false,
+        "has_frontend": true
+      }
+    },
+    {
+      "name": "products_admin_auth",
+      "prompt": "Build a products REST API with admin users, login and JWT protection for write operations. FastAPI + SQLAlchemy. Write pytest tests.",
+      "system_prompt": "You are a helpful assistant.",
+      "expected": {
+        "final_phase": "completed",
+        "spec": {
+          "table": "products",
+          "has_auth": true,
+          "has_frontend": false
+        },
+        "generated_tests_pass": true
+      },
+      "response_model": null,
+      "tags": [
+        "crud",
+        "auth",
+        "tests"
+      ],
+      "metadata": {
+        "table": "products",
+        "has_auth": true,
+        "has_frontend": false
+      }
+    }
+  ],
+  "total_cases": 10
+}

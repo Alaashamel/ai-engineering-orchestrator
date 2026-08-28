@@ -1,0 +1,146 @@
+{
+  "prompt": "Build a REST API for a todo list. Features: create/list/update/delete todos, mark complete, and user authentication with JWT tokens. Use FastAPI + SQLAlchemy. Include tests.",
+  "mode": "mock",
+  "final_phase": "completed",
+  "phase_history": [
+    {
+      "phase": "discovery",
+      "timestamp": "2026-08-28T18:36:26.955804+00:00"
+    },
+    {
+      "phase": "planning",
+      "timestamp": "2026-08-28T18:36:26.959839+00:00"
+    },
+    {
+      "phase": "architecture",
+      "timestamp": "2026-08-28T18:36:26.960693+00:00"
+    },
+    {
+      "phase": "task_decomposition",
+      "timestamp": "2026-08-28T18:36:26.961355+00:00"
+    },
+    {
+      "phase": "implementation",
+      "timestamp": "2026-08-28T18:36:26.962376+00:00"
+    },
+    {
+      "phase": "completed",
+      "timestamp": "2026-08-28T18:36:26.978569+00:00"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "t1",
+      "title": "Build data models",
+      "description": "SQLAlchemy models for todos and users.",
+      "agent": "backend_engineer",
+      "priority": "critical",
+      "dependencies": [],
+      "status": "completed",
+      "acceptance_criteria": [
+        "models exist",
+        "tables create on startup"
+      ]
+    },
+    {
+      "id": "t2",
+      "title": "Implement REST CRUD router",
+      "description": "FastAPI router with list/create/update/delete for todos.",
+      "agent": "backend_engineer",
+      "priority": "critical",
+      "dependencies": [
+        "t1"
+      ],
+      "status": "completed",
+      "acceptance_criteria": [
+        "endpoints respond",
+        "payloads validated"
+      ]
+    },
+    {
+      "id": "t3",
+      "title": "Add JWT authentication",
+      "description": "Register/login endpoints returning HS256 bearer tokens; protect write routes.",
+      "agent": "backend_engineer",
+      "priority": "critical",
+      "dependencies": [
+        "t1"
+      ],
+      "status": "completed",
+      "acceptance_criteria": [
+        "login returns a token"
+      ]
+    },
+    {
+      "id": "t4",
+      "title": "Wire FastAPI application",
+      "description": "main.py app with routers, startup table creation, /health.",
+      "agent": "backend_engineer",
+      "priority": "high",
+      "dependencies": [
+        "t2",
+        "t3"
+      ],
+      "status": "completed",
+      "acceptance_criteria": [
+        "app imports",
+        "health returns 200"
+      ]
+    },
+    {
+      "id": "t5",
+      "title": "Write pytest suite",
+      "description": "tests for auth and CRUD on Todo (conftest with in-memory SQLite).",
+      "agent": "qa_engineer",
+      "priority": "high",
+      "dependencies": [
+        "t4"
+      ],
+      "status": "completed",
+      "acceptance_criteria": [
+        "pytest passes",
+        "401 when token missing"
+      ]
+    }
+  ],
+  "pending_approvals": [
+    {
+      "id": "approval_t1",
+      "action": "Execute task: Build data models",
+      "description": "SQLAlchemy models for todos and users.",
+      "risk_level": "medium",
+      "proposed_by": "ceo",
+      "status": "pending",
+      "created_at": "2026-08-28T18:36:26.961954+00:00"
+    },
+    {
+      "id": "approval_t2",
+      "action": "Execute task: Implement REST CRUD router",
+      "description": "FastAPI router with list/create/update/delete for todos.",
+      "risk_level": "medium",
+      "proposed_by": "ceo",
+      "status": "pending",
+      "created_at": "2026-08-28T18:36:26.961958+00:00"
+    },
+    {
+      "id": "approval_t3",
+      "action": "Execute task: Add JWT authentication",
+      "description": "Register/login endpoints returning HS256 bearer tokens; protect write routes.",
+      "risk_level": "medium",
+      "proposed_by": "ceo",
+      "status": "pending",
+      "created_at": "2026-08-28T18:36:26.961960+00:00"
+    }
+  ],
+  "generated_test_run": {
+    "attempted": true,
+    "command": "D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Scripts\\python.exe -m pytest -q --no-header -p no:cacheprovider",
+    "returncode": 0,
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "output_tail": "47: InsecureKeyLengthWarning: The HMAC key is 31 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.\r\n    return self._jws.encode(\r\n\r\ntests/test_todos.py::test_crud_roundtrip\r\ntests/test_todos.py::test_crud_roundtrip\r\ntests/test_todos.py::test_crud_roundtrip\r\ntests/test_todos.py::test_crud_roundtrip\r\ntests/test_todos.py::test_crud_404_for_missing\r\n  D:\\portfolio-projects\\creative - ideas\\project - 5\\.venv\\Lib\\site-packages\\jwt\\api_jwt.py:368: InsecureKeyLengthWarning: The HMAC key is 31 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.\r\n    decoded = self.decode_complete(\r\n\r\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\r\n6 passed, 9 warnings in 0.53s\r\n"
+  },
+  "total_wall_ms": 31.1,
+  "llm_calls": 6
+}

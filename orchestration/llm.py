@@ -62,10 +62,12 @@ class LLMProvider:
         self.api_key = api_key or os.getenv("LLM_API_KEY", "")
         self.model = model or os.getenv("LLM_MODEL", "gpt-4o")
         self.client = AsyncOpenAI(api_key=self.api_key) if self.api_key else None
+        self._last_user_prompt = ""
 
     async def generate_structured(
         self, system_prompt: str, user_prompt: str, response_model: type[T]
     ) -> T:
+        self._last_user_prompt = user_prompt
         if not self.client:
             return self._mock(response_model)
         try:
@@ -88,6 +90,10 @@ class LLMProvider:
             return self._mock(response_model)
 
     def _mock(self, model_class: type[T]) -> T:
+        from orchestration.llm_mock import build_mock
+        realistic = build_mock(model_class, self._last_user_prompt)
+        if realistic is not None:
+            return model_class.model_validate(realistic)
         return model_class.model_validate(self._build_mock(model_class))
 
     def _build_mock(self, model_class: type[BaseModel]) -> dict:
