@@ -1,8 +1,9 @@
 from fastapi import FastAPI
-from database import Base, engine
-import routers.resources
 
-app = FastAPI(title='%(Name)s Service')
+import routers.resources
+from database import Base, engine
+
+app = FastAPI(title='Todo Crud Service')
 Base.metadata.create_all(bind=engine)
 app.include_router(routers.resources.router)
 

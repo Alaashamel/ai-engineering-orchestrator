@@ -2,12 +2,12 @@
   "summary": {
     "model": "gpt-4o (mock)",
     "provider": "deterministic-mock",
-    "timestamp": "2026-08-28T18:26:02.787433+00:00",
+    "timestamp": "2026-08-28T19:05:34.792636+00:00",
     "total": 10,
     "passed": 10,
     "failed": 0,
     "pass_rate": 1.0,
-    "avg_latency_ms": 53.81,
+    "avg_latency_ms": 55.88,
     "total_cost": 0.0,
     "total_tokens": 0
   },
@@ -16,101 +16,101 @@
       "test_name": "todos_auth_fastapi",
       "passed": true,
       "score": 1.0,
-      "latency_ms": 41.95,
+      "latency_ms": 41.6,
       "tokens_used": 0,
       "cost": 0.0,
       "error": null,
-      "timestamp": "2026-08-28T18:25:24.457681+00:00"
+      "timestamp": "2026-08-28T19:04:55.586079+00:00"
     },
     {
       "test_name": "notes_public_noauth",
       "passed": true,
       "score": 1.0,
-      "latency_ms": 22.74,
+      "latency_ms": 49.04,
       "tokens_used": 0,
       "cost": 0.0,
       "error": null,
-      "timestamp": "2026-08-28T18:25:27.839681+00:00"
+      "timestamp": "2026-08-28T19:05:00.721355+00:00"
     },
     {
       "test_name": "products_catalog_backend",
       "passed": true,
       "score": 1.0,
-      "latency_ms": 72.44,
+      "latency_ms": 64.21,
       "tokens_used": 0,
       "cost": 0.0,
       "error": null,
-      "timestamp": "2026-08-28T18:25:31.577067+00:00"
+      "timestamp": "2026-08-28T19:05:04.861296+00:00"
     },
     {
       "test_name": "blog_posts_frontend",
       "passed": true,
       "score": 1.0,
-      "latency_ms": 76.47,
+      "latency_ms": 61.11,
       "tokens_used": 0,
       "cost": 0.0,
       "error": null,
-      "timestamp": "2026-08-28T18:25:35.861283+00:00"
+      "timestamp": "2026-08-28T19:05:09.424926+00:00"
     },
     {
       "test_name": "task_board_fullstack",
       "passed": true,
       "score": 1.0,
-      "latency_ms": 54.59,
+      "latency_ms": 54.61,
       "tokens_used": 0,
       "cost": 0.0,
       "error": null,
-      "timestamp": "2026-08-28T18:25:40.988772+00:00"
+      "timestamp": "2026-08-28T19:05:14.843413+00:00"
     },
     {
       "test_name": "inventory_items_noauth",
       "passed": true,
       "score": 1.0,
-      "latency_ms": 64.33,
+      "latency_ms": 40.96,
       "tokens_used": 0,
       "cost": 0.0,
       "error": null,
-      "timestamp": "2026-08-28T18:25:44.528144+00:00"
+      "timestamp": "2026-08-28T19:05:18.724721+00:00"
     },
     {
       "test_name": "orders_public_fallback",
       "passed": true,
       "score": 1.0,
-      "latency_ms": 49.41,
+      "latency_ms": 38.39,
       "tokens_used": 0,
       "cost": 0.0,
       "error": null,
-      "timestamp": "2026-08-28T18:25:48.442702+00:00"
+      "timestamp": "2026-08-28T19:05:22.710215+00:00"
     },
     {
       "test_name": "notes_no_security_gate",
       "passed": true,
       "score": 1.0,
-      "latency_ms": 51.7,
+      "latency_ms": 39.31,
       "tokens_used": 0,
       "cost": 0.0,
       "error": null,
-      "timestamp": "2026-08-28T18:25:53.131967+00:00"
+      "timestamp": "2026-08-28T19:05:26.423417+00:00"
     },
     {
       "test_name": "todos_api_ui",
       "passed": true,
       "score": 1.0,
-      "latency_ms": 60.72,
+      "latency_ms": 111.04,
       "tokens_used": 0,
       "cost": 0.0,
       "error": null,
-      "timestamp": "2026-08-28T18:25:57.535108+00:00"
+      "timestamp": "2026-08-28T19:05:30.015327+00:00"
     },
     {
       "test_name": "products_admin_auth",
       "passed": true,
       "score": 1.0,
-      "latency_ms": 43.77,
+      "latency_ms": 58.57,
       "tokens_used": 0,
       "cost": 0.0,
       "error": null,
-      "timestamp": "2026-08-28T18:26:02.787411+00:00"
+      "timestamp": "2026-08-28T19:05:34.792615+00:00"
     }
   ]
 }

@@ -92,7 +92,7 @@ def _discovery(spec_: dict[str, Any]) -> dict[str, Any]:
         "project_type": spec_["project_type"],
         "complexity": "medium",
         "key_objectives": [
-            "Provide CRUD operations on %s" % spec_["table"],
+            f"Provide CRUD operations on {spec_['table']}",
             "Secure access with authentication" if spec_["has_auth"] else "Keep the API simple and documented",
             "Ship with tests covering success and error paths",
         ],
@@ -107,22 +107,22 @@ def _discovery(spec_: dict[str, Any]) -> dict[str, Any]:
 def _requirements(spec_: dict[str, Any]) -> dict[str, Any]:
     name = spec_["table"].title()
     return {
-        "product_name": "%s Service" % name,
-        "vision": "A small, reliable API for managing %s." % spec_["table"],
+        "product_name": f"{name} Service",
+        "vision": f"A small, reliable API for managing {spec_['table']}.",
         "target_users": ["API consumers", "Frontend clients"],
         "functional_requirements": [
-            {"id": "FR-1", "title": "List %s" % spec_["table"], "description": "Return all %s with pagination." % spec_["table"], "priority": "high"},
-            {"id": "FR-2", "title": "Create %s" % spec_["table"], "description": "Create a new %s from a JSON body." % spec_["table"].rstrip("s"), "priority": "high"},
-            {"id": "FR-3", "title": "Update %s" % spec_["table"], "description": "Partially update a %s by id." % spec_["table"].rstrip("s"), "priority": "medium"},
-            {"id": "FR-4", "title": "Delete %s" % spec_["table"], "description": "Delete a %s by id." % spec_["table"].rstrip("s"), "priority": "medium"},
+            {"id": "FR-1", "title": f"List {spec_['table']}", "description": f"Return all {spec_['table']} with pagination.", "priority": "high"},
+            {"id": "FR-2", "title": f"Create {spec_['table']}", "description": f"Create a new {spec_['table'].rstrip('s')} from a JSON body.", "priority": "high"},
+            {"id": "FR-3", "title": f"Update {spec_['table']}", "description": f"Partially update a {spec_['table'].rstrip('s')} by id.", "priority": "medium"},
+            {"id": "FR-4", "title": f"Delete {spec_['table']}", "description": f"Delete a {spec_['table'].rstrip('s')} by id.", "priority": "medium"},
             {"id": "FR-5", "title": "Authentication", "description": "Register and log in with JWT tokens." if spec_["has_auth"] else "No authentication required for MVP.", "priority": "critical" if spec_["has_auth"] else "low"},
         ],
         "non_functional_requirements": ["10ms p95 for local reads", "Schema-validated request/response payloads"],
         "user_stories": [
-            {"id": "US-1", "as_a": "client", "i_want": "to create and list %s" % spec_["table"], "so_that": "I can manage data through a clean API", "acceptance_criteria": ["POST returns 201", "GET returns a list"]},
+            {"id": "US-1", "as_a": "client", "i_want": f"to create and list {spec_['table']}", "so_that": "I can manage data through a clean API", "acceptance_criteria": ["POST returns 201", "GET returns a list"]},
             {"id": "US-2", "as_a": "client", "i_want": "to authenticate" if spec_["has_auth"] else "to use the API without setup", "so_that": "only authorized callers can write data" if spec_["has_auth"] else "I can start immediately", "acceptance_criteria": ["login returns a token"] if spec_["has_auth"] else ["no auth headers required"]},
         ],
-        "mvp_features": ["CRUD on %s" % spec_["table"], "JWT auth" if spec_["has_auth"] else "Open endpoints"],
+        "mvp_features": [f"CRUD on {spec_['table']}", "JWT auth" if spec_["has_auth"] else "Open endpoints"],
         "future_features": ["Search", "Soft delete"],
         "open_questions": ["Rate limits", "Multi-tenancy"],
     }
@@ -139,16 +139,16 @@ def _architecture(spec_: dict[str, Any]) -> dict[str, Any]:
             {"layer": "Auth", "technology": "PyJWT (HS256)", "justification": "Stateless bearer tokens."} if spec_["has_auth"] else {"layer": "Data", "technology": "SQLite", "justification": "Zero-setup persistence."},
         ],
         "system_components": ["app.main: FastAPI application", "app.models: SQLAlchemy models",
-                              "app.routers.%s: CRUD endpoints" % table, "app.auth: token helpers" if spec_["has_auth"] else "app.config: settings"],
+                              f"app.routers.{table}: CRUD endpoints", "app.auth: token helpers" if spec_["has_auth"] else "app.config: settings"],
         "api_design": [
             entry for entry in [
                 {"endpoint": "/health", "method": "GET", "description": "Liveness check", "request_body": None, "response": "{\"status\": \"ok\"}"},
                 {"endpoint": "/auth/register", "method": "POST", "description": "Create a user account", "request_body": "{\"username\": \"x\", \"password\": \"y\"}", "response": "{\"id\": 1, \"username\": \"x\"}"} if spec_["has_auth"] else None,
                 {"endpoint": "/auth/login", "method": "POST", "description": "Exchange credentials for a bearer token", "request_body": "{\"username\": \"x\", \"password\": \"y\"}", "response": "{\"access_token\": \"...\"}"} if spec_["has_auth"] else None,
-                {"endpoint": "/%s" % table, "method": "GET", "description": "List %s" % table, "request_body": None, "response": "[{\"id\": 1}]"},
-                {"endpoint": "/%s" % table, "method": "POST", "description": "Create a %s" % model, "request_body": "{\"title\": \"x\"}", "response": "{\"id\": 1, \"title\": \"x\"}"},
-                {"endpoint": "/%s/{id}" % table, "method": "PATCH", "description": "Update by id", "request_body": "{\"title\": \"x\"}", "response": "{\"id\": 1, \"title\": \"x\"}"},
-                {"endpoint": "/%s/{id}" % table, "method": "DELETE", "description": "Delete by id", "request_body": None, "response": "204"},
+                {"endpoint": f"/{table}", "method": "GET", "description": f"List {table}", "request_body": None, "response": "[{\"id\": 1}]"},
+                {"endpoint": f"/{table}", "method": "POST", "description": f"Create a {model}", "request_body": "{\"title\": \"x\"}", "response": "{\"id\": 1, \"title\": \"x\"}"},
+                {"endpoint": f"/{table}/{{id}}", "method": "PATCH", "description": "Update by id", "request_body": "{\"title\": \"x\"}", "response": "{\"id\": 1, \"title\": \"x\"}"},
+                {"endpoint": f"/{table}/{{id}}", "method": "DELETE", "description": "Delete by id", "request_body": None, "response": "204"},
             ] if entry is not None
         ],
         "database_tables": [
@@ -167,19 +167,19 @@ def _task_decomposition(spec_: dict[str, Any]) -> dict[str, Any]:
     model = spec_["model_cls"]
     table = spec_["table"]
     tasks = [
-        {"id": "t1", "title": "Build data models", "description": "SQLAlchemy models for %s and users." % table,
+        {"id": "t1", "title": "Build data models", "description": f"SQLAlchemy models for {table} and users.",
          "agent": "backend_engineer", "priority": "critical", "dependencies": [], "acceptance_criteria": ["models exist", "tables create on startup"]},
-        {"id": "t2", "title": "Implement REST CRUD router", "description": "FastAPI router with list/create/update/delete for %s." % table,
+        {"id": "t2", "title": "Implement REST CRUD router", "description": f"FastAPI router with list/create/update/delete for {table}.",
          "agent": "backend_engineer", "priority": "critical", "dependencies": ["t1"], "acceptance_criteria": ["endpoints respond", "payloads validated"]},
         {"id": "t3", "title": "Add JWT authentication", "description": "Register/login endpoints returning HS256 bearer tokens; protect write routes." if spec_["has_auth"] else "Keep endpoints open for MVP.",
          "agent": "backend_engineer", "priority": "critical" if spec_["has_auth"] else "low", "dependencies": ["t1"], "acceptance_criteria": ["login returns a token"] if spec_["has_auth"] else ["no auth required"]},
         {"id": "t4", "title": "Wire FastAPI application", "description": "main.py app with routers, startup table creation, /health.",
          "agent": "backend_engineer", "priority": "high", "dependencies": ["t2", "t3"], "acceptance_criteria": ["app imports", "health returns 200"]},
-        {"id": "t5", "title": "Write pytest suite", "description": "tests for auth and CRUD on %s (conftest with in-memory SQLite)." % model,
+        {"id": "t5", "title": "Write pytest suite", "description": f"tests for auth and CRUD on {model} (conftest with in-memory SQLite).",
          "agent": "qa_engineer", "priority": "high", "dependencies": ["t4"], "acceptance_criteria": ["pytest passes", "auth disabled paths covered" if not spec_["has_auth"] else "401 when token missing"]},
     ]
     if spec_["has_frontend"]:
-        tasks.append({"id": "t6", "title": "Build React UI", "description": "Minimal React app listing and creating %s via fetch." % table,
+        tasks.append({"id": "t6", "title": "Build React UI", "description": f"Minimal React app listing and creating {table} via fetch.",
                       "agent": "frontend_engineer", "priority": "medium", "dependencies": ["t4"], "acceptance_criteria": ["vite dev server runs"]})
     return {"tasks": tasks}
 
@@ -193,7 +193,7 @@ def _backend(spec_: dict[str, Any]) -> dict[str, Any]:
     table = spec_["table"]
     needs_auth = spec_["has_auth"]
 
-    schemas = (
+    schemas = (  # noqa: UP031
         "from pydantic import BaseModel, Field, ConfigDict\n"
         "from datetime import datetime\n\n"
         "\n"
@@ -231,7 +231,7 @@ def _backend(spec_: dict[str, Any]) -> dict[str, Any]:
             "    token_type: str = 'bearer'\n"
         )
 
-    models = (
+    models = (  # noqa: UP031
         "from datetime import datetime\n"
         "from sqlalchemy import String, Text, DateTime, Boolean, Integer, func, ForeignKey\n"
         "from sqlalchemy.orm import Mapped, mapped_column, relationship\n"
@@ -256,7 +256,7 @@ def _backend(spec_: dict[str, Any]) -> dict[str, Any]:
         )
 
     if needs_auth:
-        resource_router = (
+        resource_router = (  # noqa: UP031
             "from fastapi import APIRouter, Depends, HTTPException, status\n"
             "from sqlalchemy.orm import Session\n"
             "from database import get_db\n"
@@ -296,7 +296,7 @@ def _backend(spec_: dict[str, Any]) -> dict[str, Any]:
             "    return None\n"
         ) % {"Model": f"{model}", "table": table}
     else:
-        resource_router = (
+        resource_router = (  # noqa: UP031
             "from fastapi import APIRouter, Depends, HTTPException, status\n"
             "from sqlalchemy.orm import Session\n"
             "from database import get_db\n"
@@ -401,7 +401,7 @@ def _backend(spec_: dict[str, Any]) -> dict[str, Any]:
         main_py += "import routers.auth\n"
     main_py += (
         "\n"
-        "app = FastAPI(title='%(Name)s Service')\n"
+        f"app = FastAPI(title='{model} Crud Service')\n"
         "Base.metadata.create_all(bind=engine)\n"
         "app.include_router(routers.resources.router)\n"
     )
@@ -412,14 +412,14 @@ def _backend(spec_: dict[str, Any]) -> dict[str, Any]:
         "@app.get('/health')\n"
         "def health():\n"
         "    return {'status': 'ok'}\n"
-    ) % {"Name": f"{model} Crud"}
+    )
 
     files = [
         _generated_file("requirements.txt",
                         "fastapi\nuvicorn\nsqlalchemy\npyjwt\npytest\nhttpx\n", "Runtime and test dependencies"),
         _generated_file("README.md",
-                        "# %(Name)s Service\n\nA small FastAPI CRUD service generated by the AI Engineering Orchestrator "
-                        "(mock mode).\n\n```bash\npip install -r requirements.txt\nuvicorn main:app --reload\n```\n" % {"Name": f"{model} Crud"}, "Project readme"),
+                        f"# {model} Crud Service\n\nA small FastAPI CRUD service generated by the AI Engineering Orchestrator "
+                        f"(mock mode).\n\n```bash\npip install -r requirements.txt\nuvicorn main:app --reload\n```\n", "Project readme"),
         _generated_file("database.py",
                         "from sqlalchemy import create_engine\n"
                         "from sqlalchemy.orm import DeclarativeBase, sessionmaker\n\n"
@@ -436,7 +436,7 @@ def _backend(spec_: dict[str, Any]) -> dict[str, Any]:
         _generated_file("schemas.py", schemas, "Pydantic request/response schemas"),
         _generated_file("auth.py", auth_module, "Password hashing and JWT helpers") if needs_auth else None,
         _generated_file("routers/__init__.py", "", "Router package marker"),
-        _generated_file("routers/resources.py", resource_router, "CRUD router for %s" % table),
+        _generated_file("routers/resources.py", resource_router, f"CRUD router for {table}"),
         _generated_file("routers/auth.py", auth_router, "Register/login endpoints") if needs_auth else None,
         _generated_file("main.py", main_py, "FastAPI application entrypoint"),
     ]
@@ -444,8 +444,8 @@ def _backend(spec_: dict[str, Any]) -> dict[str, Any]:
     return {
         "files_to_create": files,
         "packages": ["fastapi", "uvicorn", "sqlalchemy", "pyjwt", "pytest", "httpx"],
-        "summary": "Generated a FastAPI %s CRUD service with SQLAlchemy models, a REST router%s and a health check."
-                   % (model, " and JWT auth" if needs_auth else ""),
+        "summary": f"Generated a FastAPI {model} CRUD service with SQLAlchemy models, a REST router"
+                   f"{' and JWT auth' if needs_auth else ''} and a health check.",
     }
 
 
@@ -453,12 +453,12 @@ def _frontend(spec_: dict[str, Any]) -> dict[str, Any]:
     table = spec_["table"]
     component = _generated_file(
         "frontend/src/api.ts",
-        "export interface Item { id: number; title: string }\n\n"
+        "export interface Item { id: number; title: string }\n\n"  # noqa: UP031
         "export async function listItems(): Promise<Item[]> {\n"
         "  const res = await fetch('/api/%s');\n"
         "  return res.json();\n"
         "}\n" % table,
-        "Typed API client for %s" % table,
+        f"Typed API client for {table}",
     )
     return {
         "components": [component],
@@ -469,10 +469,10 @@ def _frontend(spec_: dict[str, Any]) -> dict[str, Any]:
                                    "  const [items, setItems] = useState<Item[]>([]);\n"
                                    "  useEffect(() => { listItems().then(setItems); }, []);\n"
                                    "  return <ul>{items.map(i => <li key={i.id}>{i.title}</li>)}</ul>;\n"
-                                   "}", "List page for %s" % table)],
+                                   "}", "List page for {table}")],
         "hooks": [],
         "packages": ["react", "react-dom", "vite", "typescript"],
-        "summary": "Generated a minimal React scaffold listing %s." % table,
+        "summary": f"Generated a minimal React scaffold listing {table}.",
     }
 
 
@@ -512,7 +512,7 @@ def _tests(spec_: dict[str, Any]) -> dict[str, Any]:
     )
 
     if needs_auth:
-        tests = (
+        tests = (  # noqa: UP031
             "from fastapi.testclient import TestClient\n\n"
             "def _register(client):\n"
             "    client.post('/auth/register', json={'username': 'alice', 'password': 'secret123'})\n\n"
@@ -557,7 +557,7 @@ def _tests(spec_: dict[str, Any]) -> dict[str, Any]:
             "    assert client.get('/%(table)s/9999', headers=headers).status_code == 404\n"
         ) % {"table": table}
     else:
-        tests = (
+        tests = (  # noqa: UP031
             "def test_health(client):\n"
             "    r = client.get('/health')\n"
             "    assert r.status_code == 200\n"
@@ -578,11 +578,11 @@ def _tests(spec_: dict[str, Any]) -> dict[str, Any]:
         ) % {"table": table}
 
     return {
-        "test_files": [_generated_file("tests/test_%s.py" % table, tests,
-                                       "Functional tests for the %s CRUD service" % model)],
+        "test_files": [_generated_file(f"tests/test_{table}.py", tests,
+                                       f"Functional tests for the {model} CRUD service")],
         "fixtures": [_generated_file("tests/conftest.py", conftest, "In-memory SQLite test fixtures")],
         "packages": ["pytest", "httpx", "pytest-asyncio"],
-        "summary": "Generated a pytest suite covering health, auth and %s CRUD against an in-memory database." % model,
+        "summary": f"Generated a pytest suite covering health, auth and {model} CRUD against an in-memory database.",
     }
 
 
