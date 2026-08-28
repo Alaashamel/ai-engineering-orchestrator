@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+
 from database import get_db
 from models import Item
 from schemas import ItemCreate, ItemRead, ItemUpdate
@@ -39,4 +40,3 @@ def delete_item(item_id: int, db: Session = Depends(get_db)):
     if not row:
         raise HTTPException(status_code=404, detail='not found')
     db.delete(row); db.commit()
-    return None
