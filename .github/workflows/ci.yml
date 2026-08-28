@@ -27,7 +27,7 @@ jobs:
       - run: pip install ruff bandit
       - run: ruff check src/ tests/
       - name: Security scan
-        run: bandit -r apps/api/src/ -s B101
+        run: bandit -r src/ -s B101
 
   lint-frontend:
     name: Lint TypeScript
@@ -41,6 +41,7 @@ jobs:
         with:
           node-version: "20"
           cache: npm
+          cache-dependency-path: apps/web/package-lock.json
       - run: npm ci
       - run: npx tsc --noEmit
 
