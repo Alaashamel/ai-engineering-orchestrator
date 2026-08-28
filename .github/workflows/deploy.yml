@@ -26,14 +26,14 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push API image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: ./apps/api
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/api:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/api:${{ github.sha }}
 
       - name: Build and push Web image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: ./apps/web
           push: true
